@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.0] - 2023-12-XX
+
+### 🎆 MAJOR UX IMPROVEMENT - Perfect Credentials Solution
+- **🔒 Unified Credential**: Single credential with authentication type selection
+- **✨ Smart UI**: Conditional fields based on authentication choice
+- **🎨 Better UX**: No more confusion - one credential, clear choices
+- **📝 Clear Options**: 
+  - API Token (Recommended for personal use)
+  - OAuth2 (For integrations & apps)
+- **🛠️ Simplified Setup**: Much cleaner credential configuration
+- **🔄 Backward Compatible**: Existing setups continue to work
+
+### Technical Changes
+- Unified `PennylaneTokenApi` credential with `authType` selector
+- Removed separate `PennylaneOAuth2Api` credential
+- Updated transport layer to handle both auth types in single credential
+- Improved error messaging for authentication issues
+
 ## [2.0.1] - 2023-12-XX
 
 ### Fixed - UX Improvements

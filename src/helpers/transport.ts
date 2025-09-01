@@ -266,7 +266,7 @@ export class PennylaneTransport {
  */
 export async function createTransport(
   context: IExecuteFunctions | ILoadOptionsFunctions | ITriggerFunctions,
-  credentialType: 'pennylaneTokenApi' | 'pennylaneOAuth2Api'
+  credentialType: 'pennylaneTokenApi' = 'pennylaneTokenApi'
 ): Promise<PennylaneTransport> {
   const credentials = await context.getCredentials(credentialType);
   
@@ -274,22 +274,25 @@ export async function createTransport(
     throw new Error(`No credentials found for ${credentialType}`);
   }
 
+  const authType = credentials.authType as string || 'token';
   const pennylaneCredentials: PennylaneCredentials = {
     environment: (credentials.environment as 'production' | 'sandbox') || 'production',
   };
 
-  if (credentialType === 'pennylaneTokenApi') {
+  if (authType === 'token') {
     if (!credentials.apiToken) {
-      throw new Error('API Token is required for Pennylane Token API');
+      throw new Error('API Token is required for Token authentication');
     }
     pennylaneCredentials.apiToken = credentials.apiToken as string;
     pennylaneCredentials.companyId = credentials.companyId as string;
-  } else {
+  } else if (authType === 'oauth2') {
     if (!credentials.accessToken) {
-      throw new Error('Access Token is required for Pennylane OAuth2 API');
+      throw new Error('Access Token is required for OAuth2 authentication');
     }
     pennylaneCredentials.accessToken = credentials.accessToken as string;
-    pennylaneCredentials.companyId = credentials.companyId as string;
+    pennylaneCredentials.companyId = credentials.oauthCompanyId as string;
+  } else {
+    throw new Error(`Unsupported authentication type: ${authType}`);
   }
 
   return new PennylaneTransport(pennylaneCredentials);

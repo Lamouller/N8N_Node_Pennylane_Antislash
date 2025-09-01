@@ -17,11 +17,7 @@ export class PennylaneTrigger implements INodeType {
     credentials: [
       {
         name: 'pennylaneTokenApi',
-        required: false,
-      },
-      {
-        name: 'pennylaneOAuth2Api',
-        required: false,
+        required: true,
       },
     ],
     properties: [
@@ -187,11 +183,7 @@ export class PennylaneTrigger implements INodeType {
     try {
       transport = await createTransport(this, 'pennylaneTokenApi');
     } catch (error) {
-      try {
-        transport = await createTransport(this, 'pennylaneOAuth2Api');
-      } catch (error2) {
-        throw new Error('No valid Pennylane credentials found');
-      }
+      throw new Error('Unable to connect to Pennylane API. Please check your credentials.');
     }
 
     // Set rate limit for trigger operations
