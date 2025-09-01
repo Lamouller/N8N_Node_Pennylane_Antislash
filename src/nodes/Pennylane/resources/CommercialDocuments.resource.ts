@@ -1,5 +1,5 @@
 import { IExecuteFunctions, IDataObject } from 'n8n-workflow';
-import FormData from 'form-data';
+
 
 export async function handleCommercialDocument(context: IExecuteFunctions, transport: any, operation: string, itemIndex: number): Promise<any> {
   const id = context.getNodeParameter('id', itemIndex, '') as string;
@@ -37,18 +37,13 @@ export async function handleCommercialDocument(context: IExecuteFunctions, trans
       }
       const binaryData = item.binary;
 
-      const formData = new FormData();
       const fileData = binaryData.data!;
-      formData.append('appendix', fileData.data, fileData.fileName || 'appendix.pdf');
       
-      return await transport.request({
-        method: 'POST',
-        url: `/commercial_documents/${id}/appendices`,
-        data: formData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      return await transport.uploadFile(
+        `/commercial_documents/${id}/appendices`,
+        fileData.data,
+        fileData.fileName || 'appendix.pdf'
+      );
 
     default:
       throw new Error(`Operation '${operation}' is not supported for commercial documents`);
