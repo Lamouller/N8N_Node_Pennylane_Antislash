@@ -52,7 +52,7 @@ import {
   commercialDocumentProperties,
 } from './resources/CommercialDocuments.resource';
 
-class Pennylane implements INodeType {
+export class Pennylane implements INodeType {
   description: INodeTypeDescription = {
     displayName: 'Pennylane',
     name: 'pennylane',
@@ -1493,6 +1493,3 @@ class Pennylane implements INodeType {
     return [returnData];
   }
 }
-
-// Export compatible avec n8n
-export { Pennylane as class };

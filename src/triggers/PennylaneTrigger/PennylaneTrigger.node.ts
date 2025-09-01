@@ -7,7 +7,7 @@ import {
 } from 'n8n-workflow';
 import { createTransport } from '../../helpers/transport';
 
-class PennylaneTrigger implements INodeType {
+export class PennylaneTrigger implements INodeType {
   description: INodeTypeDescription = {
     displayName: 'Pennylane Trigger',
     name: 'pennylaneTrigger',
@@ -268,6 +268,3 @@ class PennylaneTrigger implements INodeType {
     } as any;
   }
 }
-
-// Export compatible avec n8n
-export { PennylaneTrigger as class };

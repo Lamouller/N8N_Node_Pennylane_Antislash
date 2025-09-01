@@ -1,6 +1,6 @@
 import { ICredentialType, INodeProperties } from 'n8n-workflow';
 
-class PennylaneTokenApi implements ICredentialType {
+export class PennylaneTokenApi implements ICredentialType {
   name = 'pennylaneTokenApi';
   displayName = 'Pennylane API';
   documentationUrl = 'https://pennylane.readme.io/';
@@ -158,6 +158,3 @@ class PennylaneTokenApi implements ICredentialType {
     },
   ];
 }
-
-// Export compatible avec n8n
-export { PennylaneTokenApi as class };
