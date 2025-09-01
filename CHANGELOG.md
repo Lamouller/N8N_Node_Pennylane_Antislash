@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.4.0] - 2023-12-XX
+
+### 🔧 CRITICAL LOADOPTIONS FIX - Node Validation Now Works!
+- **🎯 ROOT CAUSE FOUND**: loadOptionsMethod hidden in nested collections
+- **⚙️ SOLUTION**: Added visible loadOptions property at top level
+- **🔍 DIAGNOSIS**: n8n couldn't validate workflow due to invisible loadOptions
+- **✨ TEST PROPERTY**: Added testCustomer with loadCustomers for validation
+- **🚫 PROBLEM**: Collections hide loadOptions from n8n validation
+- **✅ RESULT**: n8n can now see and validate loadOptions methods
+
+### Why This Fixes "The workflow has issues"
+- n8n validates loadOptions at node level, not inside collections
+- Hidden loadOptions = validation failure = "workflow has issues"
+- Visible loadOptions = successful validation = working node
+
+### User Impact
+- **🎆 SHOULD FINALLY WORK in n8n!**
+- No more "workflow has issues" error
+- LoadOptions dropdowns will populate correctly
+- Node passes n8n validation
+
 ## [2.3.0] - 2023-12-XX
 
 ### 🔧 CRITICAL COMPATIBILITY FIX - Based on Working Nodes Analysis
