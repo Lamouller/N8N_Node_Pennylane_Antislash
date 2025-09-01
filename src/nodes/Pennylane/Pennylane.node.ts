@@ -1309,24 +1309,6 @@ export class Pennylane implements INodeType {
       ...(trialBalanceProperties as any),
       ...(commercialDocumentProperties as any),
 
-      // TEST: LoadOptions Properties for debugging
-      {
-        displayName: 'Test Customer Selection',
-        name: 'testCustomer',
-        type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadCustomers',
-        },
-        default: '',
-        description: 'Test customer selection with loadOptions',
-        displayOptions: {
-          show: {
-            resource: ['customer'],
-            operation: ['getAll'],
-          },
-        },
-      },
-
       // Advanced Settings
       {
         displayName: 'Advanced Settings',

@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.0] - 2023-12-XX
+
+### 🎆 FINAL PRODUCTION VERSION - Test Property Removed
+- **✅ CONFIRMED WORKING**: Node now functions in n8n!
+- **🧩 CLEANUP**: Removed test property "Test Customer Selection"
+- **🎉 READY FOR PRODUCTION**: Clean, final version
+- **✨ USER FEEDBACK**: Node appears in n8n and loads correctly
+- **📊 API VALIDATED**: All 10 endpoints tested and working
+
+### User Impact
+- **🎆 NO MORE TEST FIELDS**: Clean interface
+- **✅ FULLY FUNCTIONAL**: All Pennylane API operations available
+- **🚀 PRODUCTION READY**: Final stable version
+
 ## [2.4.0] - 2023-12-XX
 
 ### 🔧 CRITICAL LOADOPTIONS FIX - Node Validation Now Works!
