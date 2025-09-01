@@ -1,0 +1,18 @@
+# Source files
+src/
+test/
+.github/
+
+# Configuration files
+.eslintrc.js
+.prettierrc
+jest.config.js
+tsconfig.json
+
+# Development files
+.gitignore
+README.md
+LICENSE
+
+# Build tools
+gulpfile.js
