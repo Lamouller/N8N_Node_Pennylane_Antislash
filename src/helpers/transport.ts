@@ -17,6 +17,25 @@ export interface PennylaneApiResponse<T = any> {
   cursor?: string;
 }
 
+/**
+ * Build correct Pennylane API endpoint with company_id as query parameter
+ */
+export function buildPennylaneEndpoint(resource: string, companyId: string, params: Record<string, any> = {}): string {
+  const queryParams = new URLSearchParams({
+    company_id: companyId,
+    ...params
+  });
+  
+  return `/${resource}?${queryParams.toString()}`;
+}
+
+/**
+ * Build endpoint for single resource by ID
+ */
+export function buildPennylaneResourceEndpoint(resource: string, resourceId: string, companyId: string): string {
+  return `/${resource}/${resourceId}?company_id=${companyId}`;
+}
+
 export interface PennylaneError {
   error: string;
   message: string;
@@ -70,12 +89,16 @@ export class PennylaneTransport {
       };
     }
 
-    // Add company ID if available
-    if (this.credentials.companyId) {
-      config.headers = {
-        ...config.headers,
-        'X-Company-ID': this.credentials.companyId,
-      };
+    // Add company_id to query params if not already present and companyId is available
+    if (this.credentials.companyId && config.url) {
+      // Check if URL already has query parameters
+      const hasParams = config.url.includes('?');
+      const separator = hasParams ? '&' : '?';
+      
+      // Only add company_id if it's not already in the URL
+      if (!config.url.includes('company_id=')) {
+        config.url = config.url + separator + `company_id=${this.credentials.companyId}`;
+      }
     }
 
     // Rate limiting

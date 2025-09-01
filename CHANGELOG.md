@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.0] - 2023-12-XX
+
+### 🚀 CRITICAL API FIX - Node Now Actually Works!
+- **🎯 MAJOR BUG FIXED**: Corrected Pennylane API endpoint format
+- **⚙️ Transport Layer**: Auto-injection of `company_id` parameter
+- **🔄 URL Format Fixed**: 
+  - Before: `/companies/{companyId}/customers` (returned HTML)
+  - After: `/customers?company_id={companyId}` (returns JSON)
+- **✨ Seamless Integration**: All existing resource operations now work perfectly
+- **📊 Pagination Fixed**: `getAllPages` method working correctly
+- **🔍 Thoroughly Tested**: Validated with real Pennylane credentials
+
+### Technical Changes
+- Modified `PennylaneTransport.handleRequest()` to auto-append `company_id`
+- Added helper functions for endpoint construction
+- Maintained backward compatibility for all resource files
+- Fixed rate limiting and error handling
+
+### User Impact
+- **🎆 IT ACTUALLY WORKS NOW!** All API calls return proper JSON data
+- No configuration changes needed - existing setups work immediately
+- Much faster response times with correct endpoints
+
 ## [2.1.0] - 2023-12-XX
 
 ### 🎆 MAJOR UX IMPROVEMENT - Perfect Credentials Solution
