@@ -5,7 +5,7 @@ import {
 
 export class PennylaneTokenApi implements ICredentialType {
   name = 'pennylaneTokenApi';
-  displayName = 'Pennylane Token API';
+  displayName = 'Pennylane API Token (Recommended for personal use)';
   documentationUrl = 'https://pennylane.readme.io/docs/generating-my-api-token';
   properties: INodeProperties[] = [
     {

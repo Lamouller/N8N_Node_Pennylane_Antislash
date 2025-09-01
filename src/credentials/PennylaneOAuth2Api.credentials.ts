@@ -5,7 +5,7 @@ import {
 
 export class PennylaneOAuth2Api implements ICredentialType {
   name = 'pennylaneOAuth2Api';
-  displayName = 'Pennylane OAuth2 API';
+  displayName = 'Pennylane OAuth2 (For integrations & apps)';
   documentationUrl = 'https://pennylane.readme.io/docs/oauth-20-walkthrough';
   extends = ['oAuth2'];
   properties: INodeProperties[] = [

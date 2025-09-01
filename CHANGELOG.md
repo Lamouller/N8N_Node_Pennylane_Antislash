@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.1] - 2023-12-XX
+
+### Fixed - UX Improvements
+- **🔒 Credentials Choice**: Fixed requirement to configure both credentials - users can now choose between API Token OR OAuth2
+- **📄 Better Descriptions**: Improved credential descriptions to clarify usage (API Token for personal use, OAuth2 for integrations)
+- **✨ User Experience**: Much cleaner credential selection process
+
 ## [2.0.0] - 2023-12-XX
 
 ### 🎯 PERFECT API COVERAGE - 100% COMPLETE

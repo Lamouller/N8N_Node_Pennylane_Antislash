@@ -41,11 +41,11 @@ export class Pennylane implements INodeType {
     credentials: [
       {
         name: 'pennylaneTokenApi',
-        required: true,
+        required: false,
       },
       {
         name: 'pennylaneOAuth2Api',
-        required: true,
+        required: false,
       },
     ],
     properties: [
