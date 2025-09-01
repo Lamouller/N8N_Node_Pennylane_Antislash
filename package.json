@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/trystanlamouller/n8n-nodes-pennylane-antislash.git"
+    "url": "git+https://github.com/Lamouller/N8N_Node_Pennylane_Antislash.git"
   },
   "main": "index.js",
   "scripts": {
