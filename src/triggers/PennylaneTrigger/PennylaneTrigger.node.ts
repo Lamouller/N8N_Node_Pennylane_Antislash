@@ -4,6 +4,7 @@ import {
   INodeTypeDescription,
   IDataObject,
   ITriggerResponse,
+  NodeConnectionType,
 } from 'n8n-workflow';
 import { createTransport } from '../../helpers/transport';
 
@@ -19,7 +20,7 @@ export class PennylaneTrigger implements INodeType {
       name: 'Pennylane Trigger',
     },
     inputs: [],
-    outputs: ['main'],
+    outputs: [NodeConnectionType.Main],
     credentials: [
       {
         name: 'pennylaneTokenApi',

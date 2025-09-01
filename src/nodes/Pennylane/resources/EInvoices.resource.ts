@@ -1,11 +1,8 @@
 import { IExecuteFunctions, IDataObject } from 'n8n-workflow';
+import FormData from 'form-data';
 
-export async function handleEInvoice(
-  context: IExecuteFunctions,
-  transport: any,
-  operation: string,
-  itemIndex: number
-): Promise<any> {
+export async function handleEInvoice(context: IExecuteFunctions, transport: any, operation: string, itemIndex: number): Promise<any> {
+  
   switch (operation) {
     case 'import':
       const inputData = context.getInputData();
@@ -15,24 +12,27 @@ export async function handleEInvoice(
       }
       const binaryData = item.binary;
 
+      const formData = new FormData();
       const fileData = binaryData.data!;
-
+      
+      formData.append('file', fileData.data, fileData.fileName || 'einvoice.xml');
+      
       const importData = context.getNodeParameter('importData', itemIndex, {}) as IDataObject;
-      const additionalFields: Record<string, any> = {};
-
       if (importData.customer_id) {
-        additionalFields.customer_id = importData.customer_id as string;
+        formData.append('customer_id', importData.customer_id as string);
       }
       if (importData.auto_validate) {
-        additionalFields.auto_validate = importData.auto_validate as string;
+        formData.append('auto_validate', importData.auto_validate as string);
       }
-
-      return await transport.uploadFile(
-        '/e_invoices/import',
-        fileData.data,
-        fileData.fileName || 'einvoice.xml',
-        additionalFields
-      );
+      
+      return await transport.request({
+        method: 'POST',
+        url: '/e_invoices/import',
+        data: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
     default:
       throw new Error(`Operation '${operation}' is not supported for e-invoices`);

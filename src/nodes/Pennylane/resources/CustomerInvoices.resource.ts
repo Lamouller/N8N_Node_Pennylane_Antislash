@@ -1,20 +1,12 @@
 import { IExecuteFunctions, IDataObject } from 'n8n-workflow';
+import FormData from 'form-data';
 
-export async function handleCustomerInvoice(
-  context: IExecuteFunctions,
-  transport: any,
-  operation: string,
-  itemIndex: number
-): Promise<any> {
+export async function handleCustomerInvoice(context: IExecuteFunctions, transport: any, operation: string, itemIndex: number): Promise<any> {
   const id = context.getNodeParameter('id', itemIndex, '') as string;
-
+  
   switch (operation) {
     case 'create':
-      const createData = context.getNodeParameter(
-        'customerInvoiceData',
-        itemIndex,
-        {}
-      ) as IDataObject;
+      const createData = context.getNodeParameter('customerInvoiceData', itemIndex, {}) as IDataObject;
       return await transport.request({
         method: 'POST',
         url: '/customer_invoices',
@@ -34,11 +26,7 @@ export async function handleCustomerInvoice(
 
     case 'update':
       if (!id) throw new Error('ID is required for update operation');
-      const updateData = context.getNodeParameter(
-        'customerInvoiceData',
-        itemIndex,
-        {}
-      ) as IDataObject;
+      const updateData = context.getNodeParameter('customerInvoiceData', itemIndex, {}) as IDataObject;
       return await transport.request({
         method: 'PUT',
         url: `/customer_invoices/${id}`,
@@ -85,14 +73,19 @@ export async function handleCustomerInvoice(
         throw new Error('No binary data found for upload');
       }
       const binaryData = item.binary;
-
+      
+      const formData = new FormData();
       const fileData = binaryData.data!;
-
-      return await transport.uploadFile(
-        `/customer_invoices/${id}/appendix`,
-        fileData.data,
-        fileData.fileName || 'appendix.pdf'
-      );
+      formData.append('appendix', fileData.data, fileData.fileName || 'appendix.pdf');
+      
+      return await transport.request({
+        method: 'PUT',
+        url: `/customer_invoices/${id}/appendix`,
+        data: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
     case 'importFromFile':
       const importInputData = context.getInputData();
@@ -101,14 +94,19 @@ export async function handleCustomerInvoice(
         throw new Error('No binary data found for import');
       }
       const importBinaryData = importItem.binary;
-
+      
+      const importFormData = new FormData();
       const importFileData = importBinaryData.data!;
-
-      return await transport.uploadFile(
-        '/customer_invoices/import',
-        importFileData.data,
-        importFileData.fileName || 'invoices.csv'
-      );
+      importFormData.append('file', importFileData.data, importFileData.fileName || 'invoices.csv');
+      
+      return await transport.request({
+        method: 'POST',
+        url: '/customer_invoices/import',
+        data: importFormData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
     default:
       throw new Error(`Operation '${operation}' is not supported for customer invoices`);
@@ -125,15 +123,7 @@ export const customerInvoiceProperties = [
     displayOptions: {
       show: {
         resource: ['customerInvoice'],
-        operation: [
-          'get',
-          'update',
-          'delete',
-          'finalize',
-          'markAsPaid',
-          'sendEmail',
-          'uploadAppendix',
-        ],
+        operation: ['get', 'update', 'delete', 'finalize', 'markAsPaid', 'sendEmail', 'uploadAppendix'],
       },
     },
     required: true,
@@ -208,14 +198,14 @@ export const customerInvoiceProperties = [
             name: 'line',
             displayName: 'Line Item',
             values: [
-              {
-                displayName: 'Product ID',
-                name: 'product_id',
-                type: 'options',
-                loadOptionsMethod: 'loadProducts',
-                default: '',
-                description: 'Product for this line',
-              },
+                              {
+                  displayName: 'Product ID',
+                  name: 'product_id',
+                  type: 'options',
+                  loadOptionsMethod: 'loadProducts',
+                  default: '',
+                  description: 'Product for this line',
+                },
               {
                 displayName: 'Label',
                 name: 'label',

@@ -1,20 +1,12 @@
 import { IExecuteFunctions, IDataObject } from 'n8n-workflow';
+import FormData from 'form-data';
 
-export async function handleSupplierInvoice(
-  context: IExecuteFunctions,
-  transport: any,
-  operation: string,
-  itemIndex: number
-): Promise<any> {
+export async function handleSupplierInvoice(context: IExecuteFunctions, transport: any, operation: string, itemIndex: number): Promise<any> {
   const id = context.getNodeParameter('id', itemIndex, '') as string;
-
+  
   switch (operation) {
     case 'create':
-      const createData = context.getNodeParameter(
-        'supplierInvoiceData',
-        itemIndex,
-        {}
-      ) as IDataObject;
+      const createData = context.getNodeParameter('supplierInvoiceData', itemIndex, {}) as IDataObject;
       return await transport.request({
         method: 'POST',
         url: '/supplier_invoices',
@@ -34,11 +26,7 @@ export async function handleSupplierInvoice(
 
     case 'update':
       if (!id) throw new Error('ID is required for update operation');
-      const updateData = context.getNodeParameter(
-        'supplierInvoiceData',
-        itemIndex,
-        {}
-      ) as IDataObject;
+      const updateData = context.getNodeParameter('supplierInvoiceData', itemIndex, {}) as IDataObject;
       return await transport.request({
         method: 'PUT',
         url: `/supplier_invoices/${id}`,
@@ -69,14 +57,19 @@ export async function handleSupplierInvoice(
         throw new Error('No binary data found for upload');
       }
       const binaryData = item.binary;
-
+      
+      const formData = new FormData();
       const fileData = binaryData.data!;
-
-      return await transport.uploadFile(
-        `/supplier_invoices/${id}/file`,
-        fileData.data,
-        fileData.fileName || 'invoice.pdf'
-      );
+      formData.append('file', fileData.data, fileData.fileName || 'invoice.pdf');
+      
+      return await transport.request({
+        method: 'PUT',
+        url: `/supplier_invoices/${id}/file`,
+        data: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
     case 'importFromFile':
       const importInputData = context.getInputData();
@@ -85,14 +78,19 @@ export async function handleSupplierInvoice(
         throw new Error('No binary data found for import');
       }
       const importBinaryData = importItem.binary;
-
+      
+      const importFormData = new FormData();
       const importFileData = importBinaryData.data!;
-
-      return await transport.uploadFile(
-        '/supplier_invoices/import',
-        importFileData.data,
-        importFileData.fileName || 'invoices.csv'
-      );
+      importFormData.append('file', importFileData.data, importFileData.fileName || 'invoices.csv');
+      
+      return await transport.request({
+        method: 'POST',
+        url: '/supplier_invoices/import',
+        data: importFormData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
     default:
       throw new Error(`Operation '${operation}' is not supported for supplier invoices`);

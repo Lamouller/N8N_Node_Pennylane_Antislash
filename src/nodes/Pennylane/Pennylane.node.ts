@@ -4,6 +4,7 @@ import {
   INodeExecutionData,
   INodeType,
   INodeTypeDescription,
+  NodeConnectionType,
 } from 'n8n-workflow';
 import { createTransport } from '../../helpers/transport';
 import * as loadOptions from '../../helpers/loadOptions';
@@ -63,8 +64,8 @@ export class Pennylane implements INodeType {
     defaults: {
       name: 'Pennylane',
     },
-    inputs: ['main'],
-    outputs: ['main'],
+    inputs: [NodeConnectionType.Main],
+    outputs: [NodeConnectionType.Main],
     credentials: [
       {
         name: 'pennylaneTokenApi',

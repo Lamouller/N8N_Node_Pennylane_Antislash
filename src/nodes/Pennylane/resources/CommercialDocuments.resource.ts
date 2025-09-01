@@ -1,13 +1,9 @@
 import { IExecuteFunctions, IDataObject } from 'n8n-workflow';
+import FormData from 'form-data';
 
-export async function handleCommercialDocument(
-  context: IExecuteFunctions,
-  transport: any,
-  operation: string,
-  itemIndex: number
-): Promise<any> {
+export async function handleCommercialDocument(context: IExecuteFunctions, transport: any, operation: string, itemIndex: number): Promise<any> {
   const id = context.getNodeParameter('id', itemIndex, '') as string;
-
+  
   switch (operation) {
     case 'get':
       if (!id) throw new Error('ID is required for get operation');
@@ -22,11 +18,7 @@ export async function handleCommercialDocument(
 
     case 'getInvoiceLineSections':
       if (!id) throw new Error('ID is required for getInvoiceLineSections operation');
-      return await transport.getAllPages(
-        `/commercial_documents/${id}/invoice_line_sections`,
-        {},
-        50
-      );
+      return await transport.getAllPages(`/commercial_documents/${id}/invoice_line_sections`, {}, 50);
 
     case 'getInvoiceLines':
       if (!id) throw new Error('ID is required for getInvoiceLines operation');
@@ -45,13 +37,18 @@ export async function handleCommercialDocument(
       }
       const binaryData = item.binary;
 
+      const formData = new FormData();
       const fileData = binaryData.data!;
-
-      return await transport.uploadFile(
-        `/commercial_documents/${id}/appendices`,
-        fileData.data,
-        fileData.fileName || 'appendix.pdf'
-      );
+      formData.append('appendix', fileData.data, fileData.fileName || 'appendix.pdf');
+      
+      return await transport.request({
+        method: 'POST',
+        url: `/commercial_documents/${id}/appendices`,
+        data: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
     default:
       throw new Error(`Operation '${operation}' is not supported for commercial documents`);
@@ -68,13 +65,7 @@ export const commercialDocumentProperties = [
     displayOptions: {
       show: {
         resource: ['commercialDocument'],
-        operation: [
-          'get',
-          'getInvoiceLineSections',
-          'getInvoiceLines',
-          'getAppendices',
-          'uploadAppendix',
-        ],
+        operation: ['get', 'getInvoiceLineSections', 'getInvoiceLines', 'getAppendices', 'uploadAppendix'],
       },
     },
     required: true,
