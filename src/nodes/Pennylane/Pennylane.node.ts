@@ -19,6 +19,11 @@ import { handleLedgerEntry, ledgerEntryProperties } from './resources/LedgerEntr
 import { handleMandate, mandateProperties } from './resources/Mandates.resource';
 import { handleBillingSubscription, billingSubscriptionProperties } from './resources/BillingSubscriptions.resource';
 import { handleEInvoice, eInvoiceProperties } from './resources/EInvoices.resource';
+import { handleLedgerEntryLine, ledgerEntryLineProperties } from './resources/LedgerEntryLines.resource';
+import { handleCategoryGroup, categoryGroupProperties } from './resources/CategoryGroups.resource';
+import { handleCustomerInvoiceTemplate, customerInvoiceTemplateProperties } from './resources/CustomerInvoiceTemplates.resource';
+import { handleTrialBalance, trialBalanceProperties } from './resources/TrialBalance.resource';
+import { handleCommercialDocument, commercialDocumentProperties } from './resources/CommercialDocuments.resource';
 
 export class Pennylane implements INodeType {
   description: INodeTypeDescription = {
@@ -139,6 +144,31 @@ export class Pennylane implements INodeType {
             name: 'E-Invoice',
             value: 'eInvoice',
             description: 'Import electronic invoices',
+          },
+          {
+            name: 'Ledger Entry Line',
+            value: 'ledgerEntryLine',
+            description: 'Manage ledger entry lines (letter/unletter)',
+          },
+          {
+            name: 'Category Group',
+            value: 'categoryGroup',
+            description: 'Manage category groups (Analytics)',
+          },
+          {
+            name: 'Customer Invoice Template',
+            value: 'customerInvoiceTemplate',
+            description: 'Manage invoice templates',
+          },
+          {
+            name: 'Trial Balance',
+            value: 'trialBalance',
+            description: 'Generate trial balance reports',
+          },
+          {
+            name: 'Commercial Document',
+            value: 'commercialDocument',
+            description: 'Manage commercial documents',
           },
         ],
         default: 'customerInvoice',
@@ -1055,6 +1085,194 @@ export class Pennylane implements INodeType {
         default: 'import',
       },
 
+      // Ledger Entry Line operations
+      {
+        displayName: 'Operation',
+        name: 'operation',
+        type: 'options',
+        noDataExpression: true,
+        displayOptions: {
+          show: {
+            resource: ['ledgerEntryLine'],
+          },
+        },
+        options: [
+          {
+            name: 'Get',
+            value: 'get',
+            description: 'Get a ledger entry line by ID',
+            action: 'Get a ledger entry line by ID',
+          },
+          {
+            name: 'Get All',
+            value: 'getAll',
+            description: 'Get all ledger entry lines',
+            action: 'Get all ledger entry lines',
+          },
+          {
+            name: 'Get Lettered',
+            value: 'getLettered',
+            description: 'Get lettered lines for a line',
+            action: 'Get lettered ledger entry lines',
+          },
+          {
+            name: 'Get Categories',
+            value: 'getCategories',
+            description: 'Get categories of a line',
+            action: 'Get line categories',
+          },
+          {
+            name: 'Link Categories',
+            value: 'linkCategories',
+            description: 'Link analytical categories to a line',
+            action: 'Link categories to line',
+          },
+          {
+            name: 'Letter',
+            value: 'letter',
+            description: 'Letter ledger entry lines',
+            action: 'Letter ledger entry lines',
+          },
+          {
+            name: 'Unletter',
+            value: 'unletter',
+            description: 'Unletter ledger entry lines',
+            action: 'Unletter ledger entry lines',
+          },
+        ],
+        default: 'getAll',
+      },
+
+      // Category Group operations
+      {
+        displayName: 'Operation',
+        name: 'operation',
+        type: 'options',
+        noDataExpression: true,
+        displayOptions: {
+          show: {
+            resource: ['categoryGroup'],
+          },
+        },
+        options: [
+          {
+            name: 'Get',
+            value: 'get',
+            description: 'Get a category group by ID',
+            action: 'Get a category group by ID',
+          },
+          {
+            name: 'Get All',
+            value: 'getAll',
+            description: 'Get all category groups',
+            action: 'Get all category groups',
+          },
+          {
+            name: 'Get Categories',
+            value: 'getCategories',
+            description: 'Get categories of a group',
+            action: 'Get group categories',
+          },
+        ],
+        default: 'getAll',
+      },
+
+      // Customer Invoice Template operations
+      {
+        displayName: 'Operation',
+        name: 'operation',
+        type: 'options',
+        noDataExpression: true,
+        displayOptions: {
+          show: {
+            resource: ['customerInvoiceTemplate'],
+          },
+        },
+        options: [
+          {
+            name: 'Get All',
+            value: 'getAll',
+            description: 'Get all customer invoice templates',
+            action: 'Get all customer invoice templates',
+          },
+        ],
+        default: 'getAll',
+      },
+
+      // Trial Balance operations
+      {
+        displayName: 'Operation',
+        name: 'operation',
+        type: 'options',
+        noDataExpression: true,
+        displayOptions: {
+          show: {
+            resource: ['trialBalance'],
+          },
+        },
+        options: [
+          {
+            name: 'Get',
+            value: 'get',
+            description: 'Get trial balance',
+            action: 'Get trial balance',
+          },
+        ],
+        default: 'get',
+      },
+
+      // Commercial Document operations
+      {
+        displayName: 'Operation',
+        name: 'operation',
+        type: 'options',
+        noDataExpression: true,
+        displayOptions: {
+          show: {
+            resource: ['commercialDocument'],
+          },
+        },
+        options: [
+          {
+            name: 'Get',
+            value: 'get',
+            description: 'Get a commercial document by ID',
+            action: 'Get a commercial document by ID',
+          },
+          {
+            name: 'Get All',
+            value: 'getAll',
+            description: 'Get all commercial documents',
+            action: 'Get all commercial documents',
+          },
+          {
+            name: 'Get Invoice Line Sections',
+            value: 'getInvoiceLineSections',
+            description: 'Get invoice line sections',
+            action: 'Get document invoice line sections',
+          },
+          {
+            name: 'Get Invoice Lines',
+            value: 'getInvoiceLines',
+            description: 'Get invoice lines',
+            action: 'Get document invoice lines',
+          },
+          {
+            name: 'Get Appendices',
+            value: 'getAppendices',
+            description: 'Get document appendices',
+            action: 'Get document appendices',
+          },
+          {
+            name: 'Upload Appendix',
+            value: 'uploadAppendix',
+            description: 'Upload appendix to document',
+            action: 'Upload document appendix',
+          },
+        ],
+        default: 'getAll',
+      },
+
       // Common ID field
       {
         displayName: 'ID',
@@ -1089,6 +1307,11 @@ export class Pennylane implements INodeType {
       ...(mandateProperties as any),
       ...(billingSubscriptionProperties as any),
       ...(eInvoiceProperties as any),
+      ...(ledgerEntryLineProperties as any),
+      ...(categoryGroupProperties as any),
+      ...(customerInvoiceTemplateProperties as any),
+      ...(trialBalanceProperties as any),
+      ...(commercialDocumentProperties as any),
 
       // Advanced Settings
       {
@@ -1210,6 +1433,21 @@ export class Pennylane implements INodeType {
             break;
           case 'eInvoice':
             result = await handleEInvoice(this, transport, operation, i);
+            break;
+          case 'ledgerEntryLine':
+            result = await handleLedgerEntryLine(this, transport, operation, i);
+            break;
+          case 'categoryGroup':
+            result = await handleCategoryGroup(this, transport, operation, i);
+            break;
+          case 'customerInvoiceTemplate':
+            result = await handleCustomerInvoiceTemplate(this, transport, operation, i);
+            break;
+          case 'trialBalance':
+            result = await handleTrialBalance(this, transport, operation, i);
+            break;
+          case 'commercialDocument':
+            result = await handleCommercialDocument(this, transport, operation, i);
             break;
           default:
             throw new Error(`Resource '${resource}' is not yet implemented`);
