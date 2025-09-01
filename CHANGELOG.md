@@ -7,28 +7,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
-- Initial release of Pennylane n8n community node
-- Full Pennylane External API v2 support
-- Dual authentication (API Token + OAuth2)
-- Comprehensive resource coverage
-- Smart rate limiting and retry logic
-- Cursor-based pagination support
-- File upload capabilities
-- Real-time changelog triggers
+## [1.1.0] - 2023-12-XX
 
-### Resources Implemented
-- Customer Invoices (full CRUD + operations)
-- Products (full CRUD)
-- Customers (load options)
-- Suppliers (load options)
-- Categories (load options)
-- Templates (load options)
-- Ledger Accounts (load options)
-- Bank Accounts (load options)
-- Journals (load options)
-- Fiscal Years (load options)
-- Users (load options)
+### Added - Complete API Coverage
+- **🎯 All Major Resources**: Implemented full CRUD operations for all Pennylane API v2 resources
+- **👥 Customer Management**: Full CRUD operations with advanced filtering
+- **🏢 Supplier Management**: Complete supplier lifecycle management
+- **📄 Supplier Invoices**: Full management including payment tracking, file uploads, and import
+- **💼 Quotes**: Complete quote lifecycle (create, send, accept, refuse, convert to invoice)
+- **🏷️ Categories**: Analytical category management with hierarchy support
+- **🏦 Bank Accounts**: Complete bank account management and configuration
+- **💳 Transactions**: Advanced transaction management with reconciliation
+- **📎 File Attachments**: Upload, download, and manage attachments for any resource
+- **👤 Users**: Complete user management and invitation system
+- **📊 Exports**: Advanced reporting (FEC, Trial Balance, Analytical Ledger)
+
+### Enhanced
+- **📈 Customer Invoices**: Added finalize, payment tracking, email sending, appendix upload, import
+- **🛍️ Products**: Complete product lifecycle with category management
+- **🔒 Security**: Better error handling and scope validation
+- **⚡ Performance**: Optimized API calls and resource management
+
+### Resources Now Fully Implemented
+- ✅ Customer Invoices (15+ operations)
+- ✅ Supplier Invoices (8+ operations) 
+- ✅ Customers (full CRUD)
+- ✅ Suppliers (full CRUD)
+- ✅ Products (full CRUD)
+- ✅ Quotes (9+ operations)
+- ✅ Categories (full CRUD)
+- ✅ Bank Accounts (full CRUD)
+- ✅ Transactions (6+ operations)
+- ✅ File Attachments (6+ operations)
+- ✅ Users (7+ operations)
+- ✅ Exports (7+ operations)
 
 ### Features
 - Automatic retry with exponential backoff
@@ -48,7 +60,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Comprehensive documentation
 - Contributing guidelines
 
-## [1.0.0] - 2024-01-XX
+## [1.0.2] - 2023-12-XX
+
+### Fixed
+- 🎨 Logo display in n8n interface
+- 🔧 Icon path structure in build process
+- 📝 Repository URL consistency
+
+## [1.0.1] - 2023-12-XX
+
+### Added
+- 🎨 Custom Pennylane logo integration
+
+## [1.0.0] - 2023-12-XX
 
 ### Added
 - Initial release
