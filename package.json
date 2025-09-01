@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-pennylane-antislash",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "description": "n8n community node for Pennylane External API v2",
   "keywords": [
     "n8n-community-node-package",
@@ -31,9 +31,7 @@
     "prepublishOnly": "npm run build"
   },
   "files": [
-    "dist",
-    "nodes",
-    "triggers"
+    "dist"
   ],
   "n8n": {
     "n8nNodesApiVersion": 1,
