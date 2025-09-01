@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2023-12-XX
+
+### Added - Complete Accounting Module
+- **📊 Journals**: Full accounting journal management (create, get, list)
+- **📋 Ledger Accounts**: Complete chart of accounts management 
+- **📝 Ledger Entries**: Full accounting entries with lines support
+- **💳 Mandates**: SEPA and GoCardless mandate management (create, update, delete, email, associate, cancel)
+- **🔄 Billing Subscriptions**: Recurring subscription management with invoice line tracking
+- **⚡ E-Invoices**: Electronic invoice import (BETA)
+- **🔧 Enhanced LoadOptions**: Real API calls instead of sample data for all dropdowns
+
+### Improved
+- **📞 Dynamic Dropdowns**: All load options now fetch real data from Pennylane API
+- **🏗️ Better Architecture**: More modular resource structure
+- **🔐 Enhanced Security**: Better scope handling for accounting operations
+
+### Resources Added (5 new)
+- ✅ Journals (3 operations)
+- ✅ Ledger Accounts (3 operations)
+- ✅ Ledger Entries (5 operations) 
+- ✅ Mandates (8 operations - SEPA & GoCardless)
+- ✅ Billing Subscriptions (6 operations)
+- ✅ E-Invoices (1 import operation)
+
 ## [1.1.0] - 2023-12-XX
 
 ### Added - Complete API Coverage

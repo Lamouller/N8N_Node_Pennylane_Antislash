@@ -13,6 +13,12 @@ import { handleTransaction, transactionProperties } from './resources/Transactio
 import { handleExport, exportProperties } from './resources/Exports.resource';
 import { handleUser, userProperties } from './resources/Users.resource';
 import { handleFileAttachment, fileAttachmentProperties } from './resources/FileAttachments.resource';
+import { handleJournal, journalProperties } from './resources/Journals.resource';
+import { handleLedgerAccount, ledgerAccountProperties } from './resources/LedgerAccounts.resource';
+import { handleLedgerEntry, ledgerEntryProperties } from './resources/LedgerEntries.resource';
+import { handleMandate, mandateProperties } from './resources/Mandates.resource';
+import { handleBillingSubscription, billingSubscriptionProperties } from './resources/BillingSubscriptions.resource';
+import { handleEInvoice, eInvoiceProperties } from './resources/EInvoices.resource';
 
 export class Pennylane implements INodeType {
   description: INodeTypeDescription = {
@@ -103,6 +109,36 @@ export class Pennylane implements INodeType {
             name: 'File Attachment',
             value: 'fileAttachment',
             description: 'Manage file attachments',
+          },
+          {
+            name: 'Journal',
+            value: 'journal',
+            description: 'Manage accounting journals',
+          },
+          {
+            name: 'Ledger Account',
+            value: 'ledgerAccount',
+            description: 'Manage chart of accounts',
+          },
+          {
+            name: 'Ledger Entry',
+            value: 'ledgerEntry',
+            description: 'Manage accounting entries',
+          },
+          {
+            name: 'Mandate',
+            value: 'mandate',
+            description: 'Manage SEPA and GoCardless mandates',
+          },
+          {
+            name: 'Billing Subscription',
+            value: 'billingSubscription',
+            description: 'Manage recurring billing subscriptions',
+          },
+          {
+            name: 'E-Invoice',
+            value: 'eInvoice',
+            description: 'Import electronic invoices',
           },
         ],
         default: 'customerInvoice',
@@ -767,6 +803,258 @@ export class Pennylane implements INodeType {
         default: 'getAll',
       },
 
+      // Journal operations
+      {
+        displayName: 'Operation',
+        name: 'operation',
+        type: 'options',
+        noDataExpression: true,
+        displayOptions: {
+          show: {
+            resource: ['journal'],
+          },
+        },
+        options: [
+          {
+            name: 'Create',
+            value: 'create',
+            description: 'Create a new journal',
+            action: 'Create a new journal',
+          },
+          {
+            name: 'Get',
+            value: 'get',
+            description: 'Get a journal by ID',
+            action: 'Get a journal by ID',
+          },
+          {
+            name: 'Get All',
+            value: 'getAll',
+            description: 'Get all journals',
+            action: 'Get all journals',
+          },
+        ],
+        default: 'getAll',
+      },
+
+      // Ledger Account operations
+      {
+        displayName: 'Operation',
+        name: 'operation',
+        type: 'options',
+        noDataExpression: true,
+        displayOptions: {
+          show: {
+            resource: ['ledgerAccount'],
+          },
+        },
+        options: [
+          {
+            name: 'Create',
+            value: 'create',
+            description: 'Create a new ledger account',
+            action: 'Create a new ledger account',
+          },
+          {
+            name: 'Get',
+            value: 'get',
+            description: 'Get a ledger account by ID',
+            action: 'Get a ledger account by ID',
+          },
+          {
+            name: 'Get All',
+            value: 'getAll',
+            description: 'Get all ledger accounts',
+            action: 'Get all ledger accounts',
+          },
+        ],
+        default: 'getAll',
+      },
+
+      // Ledger Entry operations
+      {
+        displayName: 'Operation',
+        name: 'operation',
+        type: 'options',
+        noDataExpression: true,
+        displayOptions: {
+          show: {
+            resource: ['ledgerEntry'],
+          },
+        },
+        options: [
+          {
+            name: 'Create',
+            value: 'create',
+            description: 'Create a new ledger entry',
+            action: 'Create a new ledger entry',
+          },
+          {
+            name: 'Get',
+            value: 'get',
+            description: 'Get a ledger entry by ID',
+            action: 'Get a ledger entry by ID',
+          },
+          {
+            name: 'Get All',
+            value: 'getAll',
+            description: 'Get all ledger entries',
+            action: 'Get all ledger entries',
+          },
+          {
+            name: 'Update',
+            value: 'update',
+            description: 'Update a ledger entry',
+            action: 'Update a ledger entry',
+          },
+          {
+            name: 'Get Lines',
+            value: 'getLines',
+            description: 'Get lines of a ledger entry',
+            action: 'Get ledger entry lines',
+          },
+        ],
+        default: 'getAll',
+      },
+
+      // Mandate operations
+      {
+        displayName: 'Operation',
+        name: 'operation',
+        type: 'options',
+        noDataExpression: true,
+        displayOptions: {
+          show: {
+            resource: ['mandate'],
+          },
+        },
+        options: [
+          {
+            name: 'Create',
+            value: 'create',
+            description: 'Create a new mandate',
+            action: 'Create a new mandate',
+          },
+          {
+            name: 'Get',
+            value: 'get',
+            description: 'Get a mandate by ID',
+            action: 'Get a mandate by ID',
+          },
+          {
+            name: 'Get All',
+            value: 'getAll',
+            description: 'Get all mandates',
+            action: 'Get all mandates',
+          },
+          {
+            name: 'Update',
+            value: 'update',
+            description: 'Update a SEPA mandate',
+            action: 'Update a SEPA mandate',
+          },
+          {
+            name: 'Delete',
+            value: 'delete',
+            description: 'Delete a SEPA mandate',
+            action: 'Delete a SEPA mandate',
+          },
+          {
+            name: 'Send GoCardless Email',
+            value: 'sendGoCardlessEmail',
+            description: 'Send GoCardless mandate email',
+            action: 'Send GoCardless mandate email',
+          },
+          {
+            name: 'Associate GoCardless',
+            value: 'associateGoCardless',
+            description: 'Associate GoCardless mandate to customer',
+            action: 'Associate GoCardless mandate',
+          },
+          {
+            name: 'Cancel GoCardless',
+            value: 'cancelGoCardless',
+            description: 'Cancel a GoCardless mandate',
+            action: 'Cancel GoCardless mandate',
+          },
+        ],
+        default: 'getAll',
+      },
+
+      // Billing Subscription operations
+      {
+        displayName: 'Operation',
+        name: 'operation',
+        type: 'options',
+        noDataExpression: true,
+        displayOptions: {
+          show: {
+            resource: ['billingSubscription'],
+          },
+        },
+        options: [
+          {
+            name: 'Create',
+            value: 'create',
+            description: 'Create a new billing subscription',
+            action: 'Create a new billing subscription',
+          },
+          {
+            name: 'Get',
+            value: 'get',
+            description: 'Get a billing subscription by ID',
+            action: 'Get a billing subscription by ID',
+          },
+          {
+            name: 'Get All',
+            value: 'getAll',
+            description: 'Get all billing subscriptions',
+            action: 'Get all billing subscriptions',
+          },
+          {
+            name: 'Update',
+            value: 'update',
+            description: 'Update a billing subscription',
+            action: 'Update a billing subscription',
+          },
+          {
+            name: 'Get Invoice Lines',
+            value: 'getInvoiceLines',
+            description: 'Get invoice lines for subscription',
+            action: 'Get subscription invoice lines',
+          },
+          {
+            name: 'Get Invoice Line Sections',
+            value: 'getInvoiceLineSections',
+            description: 'Get invoice line sections for subscription',
+            action: 'Get subscription invoice line sections',
+          },
+        ],
+        default: 'getAll',
+      },
+
+      // E-Invoice operations
+      {
+        displayName: 'Operation',
+        name: 'operation',
+        type: 'options',
+        noDataExpression: true,
+        displayOptions: {
+          show: {
+            resource: ['eInvoice'],
+          },
+        },
+        options: [
+          {
+            name: 'Import',
+            value: 'import',
+            description: 'Import e-invoices from file',
+            action: 'Import e-invoices from file',
+          },
+        ],
+        default: 'import',
+      },
+
       // Common ID field
       {
         displayName: 'ID',
@@ -795,6 +1083,12 @@ export class Pennylane implements INodeType {
       ...(exportProperties as any),
       ...(userProperties as any),
       ...(fileAttachmentProperties as any),
+      ...(journalProperties as any),
+      ...(ledgerAccountProperties as any),
+      ...(ledgerEntryProperties as any),
+      ...(mandateProperties as any),
+      ...(billingSubscriptionProperties as any),
+      ...(eInvoiceProperties as any),
 
       // Advanced Settings
       {
@@ -898,6 +1192,24 @@ export class Pennylane implements INodeType {
             break;
           case 'fileAttachment':
             result = await handleFileAttachment(this, transport, operation, i);
+            break;
+          case 'journal':
+            result = await handleJournal(this, transport, operation, i);
+            break;
+          case 'ledgerAccount':
+            result = await handleLedgerAccount(this, transport, operation, i);
+            break;
+          case 'ledgerEntry':
+            result = await handleLedgerEntry(this, transport, operation, i);
+            break;
+          case 'mandate':
+            result = await handleMandate(this, transport, operation, i);
+            break;
+          case 'billingSubscription':
+            result = await handleBillingSubscription(this, transport, operation, i);
+            break;
+          case 'eInvoice':
+            result = await handleEInvoice(this, transport, operation, i);
             break;
           default:
             throw new Error(`Resource '${resource}' is not yet implemented`);
