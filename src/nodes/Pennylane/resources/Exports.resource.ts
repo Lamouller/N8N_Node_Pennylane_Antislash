@@ -154,9 +154,7 @@ export const exportProperties = [
         displayName: 'Fiscal Year',
         name: 'fiscal_year',
         type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadFiscalYears',
-        },
+        loadOptionsMethod: 'loadFiscalYears',
         default: '',
         required: true,
         description: 'Fiscal year for FEC generation',
@@ -233,9 +231,7 @@ export const exportProperties = [
         displayName: 'Category ID',
         name: 'category_id',
         type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadCategories',
-        },
+        loadOptionsMethod: 'loadCategories',
         default: '',
         description: 'Category for analytical ledger',
       },

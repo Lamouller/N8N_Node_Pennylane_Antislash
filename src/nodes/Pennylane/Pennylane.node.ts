@@ -1,4 +1,4 @@
-import { IExecuteFunctions, INodeExecutionData, INodeType, INodeTypeDescription } from 'n8n-workflow';
+import { IExecuteFunctions, ILoadOptionsFunctions, INodeExecutionData, INodeType, INodeTypeDescription } from 'n8n-workflow';
 import { createTransport } from '../../helpers/transport';
 import * as loadOptions from '../../helpers/loadOptions';
 import { handleCustomerInvoice, customerInvoiceProperties } from './resources/CustomerInvoices.resource';

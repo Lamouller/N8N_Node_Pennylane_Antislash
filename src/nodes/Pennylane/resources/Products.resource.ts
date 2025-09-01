@@ -133,9 +133,7 @@ export const productProperties = [
         displayName: 'Category ID',
         name: 'category_id',
         type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadCategories',
-        },
+        loadOptionsMethod: 'loadCategories',
         default: '',
         description: 'Product category',
       },
@@ -175,9 +173,7 @@ export const productProperties = [
         displayName: 'Category ID',
         name: 'category_id',
         type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadCategories',
-        },
+        loadOptionsMethod: 'loadCategories',
         default: '',
         description: 'Filter by category',
       },

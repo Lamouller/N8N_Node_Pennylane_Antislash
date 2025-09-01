@@ -76,9 +76,7 @@ export const ledgerEntryProperties = [
         displayName: 'Journal ID',
         name: 'journal_id',
         type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadJournals',
-        },
+        loadOptionsMethod: 'loadJournals',
         default: '',
         required: true,
         description: 'The journal for this entry',
@@ -123,9 +121,7 @@ export const ledgerEntryProperties = [
                 displayName: 'Ledger Account ID',
                 name: 'ledger_account_id',
                 type: 'options',
-                typeOptions: {
-                  loadOptionsMethod: 'loadLedgerAccounts',
-                },
+                loadOptionsMethod: 'loadLedgerAccounts',
                 default: '',
                 required: true,
                 description: 'Ledger account for this line',
@@ -176,9 +172,7 @@ export const ledgerEntryProperties = [
         displayName: 'Journal ID',
         name: 'journal_id',
         type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadJournals',
-        },
+        loadOptionsMethod: 'loadJournals',
         default: '',
         description: 'Filter by journal',
       },

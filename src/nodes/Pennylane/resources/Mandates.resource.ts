@@ -126,9 +126,7 @@ export const mandateProperties = [
         displayName: 'Customer ID',
         name: 'customer_id',
         type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadCustomers',
-        },
+        loadOptionsMethod: 'loadCustomers',
         default: '',
         required: true,
         description: 'Customer for this mandate',
@@ -220,9 +218,7 @@ export const mandateProperties = [
         displayName: 'Customer ID',
         name: 'customer_id',
         type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadCustomers',
-        },
+        loadOptionsMethod: 'loadCustomers',
         default: '',
         required: true,
         description: 'Customer to associate with mandate',
@@ -248,9 +244,7 @@ export const mandateProperties = [
         displayName: 'Customer ID',
         name: 'customer_id',
         type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadCustomers',
-        },
+        loadOptionsMethod: 'loadCustomers',
         default: '',
         description: 'Filter by customer',
       },

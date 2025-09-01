@@ -88,9 +88,7 @@ export const transactionProperties = [
         displayName: 'Bank Account ID',
         name: 'bank_account_id',
         type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadBankAccounts',
-        },
+        loadOptionsMethod: 'loadBankAccounts',
         default: '',
         required: true,
         description: 'Bank account for this transaction',
@@ -130,9 +128,7 @@ export const transactionProperties = [
         displayName: 'Category ID',
         name: 'category_id',
         type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadCategories',
-        },
+        loadOptionsMethod: 'loadCategories',
         default: '',
         description: 'Transaction category',
       },
@@ -200,9 +196,7 @@ export const transactionProperties = [
         displayName: 'Bank Account ID',
         name: 'bank_account_id',
         type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadBankAccounts',
-        },
+        loadOptionsMethod: 'loadBankAccounts',
         default: '',
         description: 'Filter by bank account',
       },
@@ -210,9 +204,7 @@ export const transactionProperties = [
         displayName: 'Category ID',
         name: 'category_id',
         type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadCategories',
-        },
+        loadOptionsMethod: 'loadCategories',
         default: '',
         description: 'Filter by category',
       },

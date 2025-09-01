@@ -101,9 +101,7 @@ export const ledgerEntryLineProperties = [
                 displayName: 'Category ID',
                 name: 'category_id',
                 type: 'options',
-                typeOptions: {
-                  loadOptionsMethod: 'loadCategories',
-                },
+                loadOptionsMethod: 'loadCategories',
                 default: '',
                 required: true,
                 description: 'Category to link',
@@ -197,9 +195,7 @@ export const ledgerEntryLineProperties = [
         displayName: 'Ledger Account ID',
         name: 'ledger_account_id',
         type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadLedgerAccounts',
-        },
+        loadOptionsMethod: 'loadLedgerAccounts',
         default: '',
         description: 'Filter by ledger account',
       },

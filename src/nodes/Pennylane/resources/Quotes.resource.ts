@@ -109,9 +109,7 @@ export const quoteProperties = [
         displayName: 'Customer ID',
         name: 'customer_id',
         type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadCustomers',
-        },
+        loadOptionsMethod: 'loadCustomers',
         default: '',
         required: true,
         description: 'The customer for this quote',
@@ -166,9 +164,7 @@ export const quoteProperties = [
                 displayName: 'Product ID',
                 name: 'product_id',
                 type: 'options',
-                typeOptions: {
-                  loadOptionsMethod: 'loadProducts',
-                },
+                loadOptionsMethod: 'loadProducts',
                 default: '',
                 description: 'Product for this line',
               },
@@ -231,9 +227,7 @@ export const quoteProperties = [
         displayName: 'Email Template',
         name: 'template',
         type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadTemplates',
-        },
+        loadOptionsMethod: 'loadTemplates',
         default: '',
         description: 'Email template to use',
       },
@@ -265,9 +259,7 @@ export const quoteProperties = [
         displayName: 'Customer ID',
         name: 'customer_id',
         type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadCustomers',
-        },
+        loadOptionsMethod: 'loadCustomers',
         default: '',
         description: 'Filter by customer',
       },

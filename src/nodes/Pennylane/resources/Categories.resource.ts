@@ -94,9 +94,7 @@ export const categoryProperties = [
         displayName: 'Parent Category ID',
         name: 'parent_id',
         type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadCategories',
-        },
+        loadOptionsMethod: 'loadCategories',
         default: '',
         description: 'Parent category (for subcategories)',
       },
@@ -149,9 +147,7 @@ export const categoryProperties = [
         displayName: 'Parent Category ID',
         name: 'parent_id',
         type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadCategories',
-        },
+        loadOptionsMethod: 'loadCategories',
         default: '',
         description: 'Filter by parent category',
       },

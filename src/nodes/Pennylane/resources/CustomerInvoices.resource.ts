@@ -148,9 +148,7 @@ export const customerInvoiceProperties = [
         displayName: 'Customer ID',
         name: 'customer_id',
         type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadCustomers',
-        },
+        loadOptionsMethod: 'loadCustomers',
         default: '',
         description: 'The customer for this invoice',
       },
@@ -200,16 +198,14 @@ export const customerInvoiceProperties = [
             name: 'line',
             displayName: 'Line Item',
             values: [
-              {
-                displayName: 'Product ID',
-                name: 'product_id',
-                type: 'options',
-                typeOptions: {
+                              {
+                  displayName: 'Product ID',
+                  name: 'product_id',
+                  type: 'options',
                   loadOptionsMethod: 'loadProducts',
+                  default: '',
+                  description: 'Product for this line',
                 },
-                default: '',
-                description: 'Product for this line',
-              },
               {
                 displayName: 'Label',
                 name: 'label',
@@ -306,9 +302,7 @@ export const customerInvoiceProperties = [
         displayName: 'Email Template',
         name: 'template',
         type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadTemplates',
-        },
+        loadOptionsMethod: 'loadTemplates',
         default: '',
         description: 'Email template to use',
       },
@@ -340,9 +334,7 @@ export const customerInvoiceProperties = [
         displayName: 'Customer ID',
         name: 'customer_id',
         type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadCustomers',
-        },
+        loadOptionsMethod: 'loadCustomers',
         default: '',
         description: 'Filter by customer',
       },

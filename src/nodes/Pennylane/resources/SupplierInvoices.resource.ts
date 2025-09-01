@@ -132,9 +132,7 @@ export const supplierInvoiceProperties = [
         displayName: 'Supplier ID',
         name: 'supplier_id',
         type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadSuppliers',
-        },
+        loadOptionsMethod: 'loadSuppliers',
         default: '',
         required: true,
         description: 'The supplier for this invoice',
@@ -200,9 +198,7 @@ export const supplierInvoiceProperties = [
         displayName: 'Category ID',
         name: 'category_id',
         type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadCategories',
-        },
+        loadOptionsMethod: 'loadCategories',
         default: '',
         description: 'Invoice category',
       },
@@ -247,9 +243,7 @@ export const supplierInvoiceProperties = [
         displayName: 'Bank Account ID',
         name: 'bank_account_id',
         type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadBankAccounts',
-        },
+        loadOptionsMethod: 'loadBankAccounts',
         default: '',
         description: 'Bank account used for payment',
       },
@@ -274,9 +268,7 @@ export const supplierInvoiceProperties = [
         displayName: 'Supplier ID',
         name: 'supplier_id',
         type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'loadSuppliers',
-        },
+        loadOptionsMethod: 'loadSuppliers',
         default: '',
         description: 'Filter by supplier',
       },
