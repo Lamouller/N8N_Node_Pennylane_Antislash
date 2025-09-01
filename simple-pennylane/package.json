@@ -1,0 +1,26 @@
+{
+  "name": "n8n-nodes-pennylane-simple",
+  "version": "1.0.0",
+  "description": "Simple Pennylane node (Axonaut structure)",
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "credentials": [
+      "dist/credentials/PennylaneApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Pennylane/Pennylane.node.js"
+    ]
+  },
+  "dependencies": {
+    "n8n-workflow": "^1.55.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.16.16",
+    "typescript": "^5.1.3"
+  },
+  "scripts": {
+    "build": "tsc"
+  }
+}

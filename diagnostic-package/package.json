@@ -1,6 +1,6 @@
 {
-  "name": "n8n-diagnostic-pennylane",
-  "version": "1.0.0",
+  "name": "n8n-nodes-diagnostic-pennylane",
+  "version": "1.0.1",
   "description": "Diagnostic package for Pennylane node loading issues",
   "main": "index.js",
   "files": [

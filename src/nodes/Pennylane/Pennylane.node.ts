@@ -56,7 +56,7 @@ import {
 export class Pennylane implements INodeType {
   description: INodeTypeDescription = {
     displayName: 'Pennylane',
-    name: 'pennylane',
+    name: 'pennylaneAntislash',
     icon: 'file:pennylane.png',
     group: ['transform'],
     version: 1,

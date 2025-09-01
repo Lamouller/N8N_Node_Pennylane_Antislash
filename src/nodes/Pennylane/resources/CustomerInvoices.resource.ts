@@ -1,5 +1,5 @@
 import { IExecuteFunctions, IDataObject } from 'n8n-workflow';
-import FormData from 'form-data';
+
 
 export async function handleCustomerInvoice(context: IExecuteFunctions, transport: any, operation: string, itemIndex: number): Promise<any> {
   const id = context.getNodeParameter('id', itemIndex, '') as string;
@@ -74,18 +74,13 @@ export async function handleCustomerInvoice(context: IExecuteFunctions, transpor
       }
       const binaryData = item.binary;
       
-      const formData = new FormData();
       const fileData = binaryData.data!;
-      formData.append('appendix', fileData.data, fileData.fileName || 'appendix.pdf');
       
-      return await transport.request({
-        method: 'PUT',
-        url: `/customer_invoices/${id}/appendix`,
-        data: formData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      return await transport.uploadFile(
+        `/customer_invoices/${id}/appendix`,
+        fileData.data,
+        fileData.fileName || 'appendix.pdf'
+      );
 
     case 'importFromFile':
       const importInputData = context.getInputData();
@@ -95,18 +90,13 @@ export async function handleCustomerInvoice(context: IExecuteFunctions, transpor
       }
       const importBinaryData = importItem.binary;
       
-      const importFormData = new FormData();
       const importFileData = importBinaryData.data!;
-      importFormData.append('file', importFileData.data, importFileData.fileName || 'invoices.csv');
       
-      return await transport.request({
-        method: 'POST',
-        url: '/customer_invoices/import',
-        data: importFormData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      return await transport.uploadFile(
+        '/customer_invoices/import',
+        importFileData.data,
+        importFileData.fileName || 'invoices.csv'
+      );
 
     default:
       throw new Error(`Operation '${operation}' is not supported for customer invoices`);

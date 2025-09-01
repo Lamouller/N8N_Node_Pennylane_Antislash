@@ -1,5 +1,5 @@
 import { IExecuteFunctions, IDataObject } from 'n8n-workflow';
-import FormData from 'form-data';
+
 
 export async function handleFileAttachment(context: IExecuteFunctions, transport: any, operation: string, itemIndex: number): Promise<any> {
   const id = context.getNodeParameter('id', itemIndex, '') as string;
@@ -14,24 +14,23 @@ export async function handleFileAttachment(context: IExecuteFunctions, transport
       const binaryData = item.binary;
 
       const uploadData = context.getNodeParameter('uploadData', itemIndex, {}) as IDataObject;
-      const formData = new FormData();
       const fileData = binaryData.data!;
       
-      formData.append('file', fileData.data, fileData.fileName || 'attachment.pdf');
-      formData.append('resource_type', uploadData.resource_type as string);
-      formData.append('resource_id', uploadData.resource_id as string);
+      const additionalFields: Record<string, any> = {
+        resource_type: uploadData.resource_type as string,
+        resource_id: uploadData.resource_id as string,
+      };
+      
       if (uploadData.description) {
-        formData.append('description', uploadData.description as string);
+        additionalFields.description = uploadData.description as string;
       }
       
-      return await transport.request({
-        method: 'POST',
-        url: '/file_attachments',
-        data: formData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      return await transport.uploadFile(
+        '/file_attachments',
+        fileData.data,
+        fileData.fileName || 'attachment.pdf',
+        additionalFields
+      );
 
     case 'get':
       if (!id) throw new Error('ID is required for get operation');

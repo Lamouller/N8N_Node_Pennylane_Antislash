@@ -1,5 +1,5 @@
 import { IExecuteFunctions, IDataObject } from 'n8n-workflow';
-import FormData from 'form-data';
+
 
 export async function handleSupplierInvoice(context: IExecuteFunctions, transport: any, operation: string, itemIndex: number): Promise<any> {
   const id = context.getNodeParameter('id', itemIndex, '') as string;
@@ -58,18 +58,13 @@ export async function handleSupplierInvoice(context: IExecuteFunctions, transpor
       }
       const binaryData = item.binary;
       
-      const formData = new FormData();
       const fileData = binaryData.data!;
-      formData.append('file', fileData.data, fileData.fileName || 'invoice.pdf');
       
-      return await transport.request({
-        method: 'PUT',
-        url: `/supplier_invoices/${id}/file`,
-        data: formData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      return await transport.uploadFile(
+        `/supplier_invoices/${id}/file`,
+        fileData.data,
+        fileData.fileName || 'invoice.pdf'
+      );
 
     case 'importFromFile':
       const importInputData = context.getInputData();
@@ -79,18 +74,13 @@ export async function handleSupplierInvoice(context: IExecuteFunctions, transpor
       }
       const importBinaryData = importItem.binary;
       
-      const importFormData = new FormData();
       const importFileData = importBinaryData.data!;
-      importFormData.append('file', importFileData.data, importFileData.fileName || 'invoices.csv');
       
-      return await transport.request({
-        method: 'POST',
-        url: '/supplier_invoices/import',
-        data: importFormData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      return await transport.uploadFile(
+        '/supplier_invoices/import',
+        importFileData.data,
+        importFileData.fileName || 'invoices.csv'
+      );
 
     default:
       throw new Error(`Operation '${operation}' is not supported for supplier invoices`);
