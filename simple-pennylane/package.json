@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-pennylane-new-antislash",
-  "version": "1.2.5",
+  "version": "1.2.7",
   "description": "COMPLETE Pennylane node - 100% API coverage + Full CRUD operations + Trigger + User-friendly interface",
   "repository": {
     "type": "git",
