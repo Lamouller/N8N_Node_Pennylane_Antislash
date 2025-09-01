@@ -81,7 +81,9 @@ export async function loadTemplates(this: ILoadOptionsFunctions): Promise<INodeP
   }
 }
 
-export async function loadLedgerAccounts(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+export async function loadLedgerAccounts(
+  this: ILoadOptionsFunctions
+): Promise<INodePropertyOptions[]> {
   try {
     const transport = await createTransport(this, 'pennylaneTokenApi');
     const response = await transport.request({
@@ -97,7 +99,9 @@ export async function loadLedgerAccounts(this: ILoadOptionsFunctions): Promise<I
   }
 }
 
-export async function loadBankAccounts(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+export async function loadBankAccounts(
+  this: ILoadOptionsFunctions
+): Promise<INodePropertyOptions[]> {
   try {
     const transport = await createTransport(this, 'pennylaneTokenApi');
     const response = await transport.request({
@@ -129,7 +133,9 @@ export async function loadJournals(this: ILoadOptionsFunctions): Promise<INodePr
   }
 }
 
-export async function loadFiscalYears(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+export async function loadFiscalYears(
+  this: ILoadOptionsFunctions
+): Promise<INodePropertyOptions[]> {
   try {
     const transport = await createTransport(this, 'pennylaneTokenApi');
     const response = await transport.request({

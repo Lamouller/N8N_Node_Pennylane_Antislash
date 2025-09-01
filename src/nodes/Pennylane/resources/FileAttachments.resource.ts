@@ -1,9 +1,13 @@
 import { IExecuteFunctions, IDataObject } from 'n8n-workflow';
 
-
-export async function handleFileAttachment(context: IExecuteFunctions, transport: any, operation: string, itemIndex: number): Promise<any> {
+export async function handleFileAttachment(
+  context: IExecuteFunctions,
+  transport: any,
+  operation: string,
+  itemIndex: number
+): Promise<any> {
   const id = context.getNodeParameter('id', itemIndex, '') as string;
-  
+
   switch (operation) {
     case 'upload':
       const inputData = context.getInputData();
@@ -15,16 +19,16 @@ export async function handleFileAttachment(context: IExecuteFunctions, transport
 
       const uploadData = context.getNodeParameter('uploadData', itemIndex, {}) as IDataObject;
       const fileData = binaryData.data!;
-      
+
       const additionalFields: Record<string, any> = {
         resource_type: uploadData.resource_type as string,
         resource_id: uploadData.resource_id as string,
       };
-      
+
       if (uploadData.description) {
         additionalFields.description = uploadData.description as string;
       }
-      
+
       return await transport.uploadFile(
         '/file_attachments',
         fileData.data,

@@ -1,8 +1,13 @@
 import { IExecuteFunctions, IDataObject } from 'n8n-workflow';
 
-export async function handleLedgerEntryLine(context: IExecuteFunctions, transport: any, operation: string, itemIndex: number): Promise<any> {
+export async function handleLedgerEntryLine(
+  context: IExecuteFunctions,
+  transport: any,
+  operation: string,
+  itemIndex: number
+): Promise<any> {
   const id = context.getNodeParameter('id', itemIndex, '') as string;
-  
+
   switch (operation) {
     case 'get':
       if (!id) throw new Error('ID is required for get operation');
@@ -25,7 +30,11 @@ export async function handleLedgerEntryLine(context: IExecuteFunctions, transpor
 
     case 'linkCategories':
       if (!id) throw new Error('ID is required for linkCategories operation');
-      const categoriesData = context.getNodeParameter('categoriesData', itemIndex, {}) as IDataObject;
+      const categoriesData = context.getNodeParameter(
+        'categoriesData',
+        itemIndex,
+        {}
+      ) as IDataObject;
       return await transport.request({
         method: 'PUT',
         url: `/ledger_entry_lines/${id}/categories`,

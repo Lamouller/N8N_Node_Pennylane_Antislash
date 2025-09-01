@@ -1,8 +1,13 @@
 import { IExecuteFunctions, IDataObject } from 'n8n-workflow';
 
-export async function handleLedgerEntry(context: IExecuteFunctions, transport: any, operation: string, itemIndex: number): Promise<any> {
+export async function handleLedgerEntry(
+  context: IExecuteFunctions,
+  transport: any,
+  operation: string,
+  itemIndex: number
+): Promise<any> {
   const id = context.getNodeParameter('id', itemIndex, '') as string;
-  
+
   switch (operation) {
     case 'create':
       const createData = context.getNodeParameter('ledgerEntryData', itemIndex, {}) as IDataObject;

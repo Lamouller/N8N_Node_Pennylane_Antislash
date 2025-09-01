@@ -1,8 +1,11 @@
 import { IExecuteFunctions, IDataObject } from 'n8n-workflow';
 
-
-export async function handleEInvoice(context: IExecuteFunctions, transport: any, operation: string, itemIndex: number): Promise<any> {
-  
+export async function handleEInvoice(
+  context: IExecuteFunctions,
+  transport: any,
+  operation: string,
+  itemIndex: number
+): Promise<any> {
   switch (operation) {
     case 'import':
       const inputData = context.getInputData();
@@ -13,17 +16,17 @@ export async function handleEInvoice(context: IExecuteFunctions, transport: any,
       const binaryData = item.binary;
 
       const fileData = binaryData.data!;
-      
+
       const importData = context.getNodeParameter('importData', itemIndex, {}) as IDataObject;
       const additionalFields: Record<string, any> = {};
-      
+
       if (importData.customer_id) {
         additionalFields.customer_id = importData.customer_id as string;
       }
       if (importData.auto_validate) {
         additionalFields.auto_validate = importData.auto_validate as string;
       }
-      
+
       return await transport.uploadFile(
         '/e_invoices/import',
         fileData.data,

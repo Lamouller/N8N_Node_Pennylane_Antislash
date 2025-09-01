@@ -1,9 +1,14 @@
 import { IExecuteFunctions, IDataObject } from 'n8n-workflow';
 
-export async function handleMandate(context: IExecuteFunctions, transport: any, operation: string, itemIndex: number): Promise<any> {
+export async function handleMandate(
+  context: IExecuteFunctions,
+  transport: any,
+  operation: string,
+  itemIndex: number
+): Promise<any> {
   const id = context.getNodeParameter('id', itemIndex, '') as string;
   const mandateType = context.getNodeParameter('mandateType', itemIndex, 'sepa') as string;
-  
+
   switch (operation) {
     case 'create':
       const createData = context.getNodeParameter('mandateData', itemIndex, {}) as IDataObject;

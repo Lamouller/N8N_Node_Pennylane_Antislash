@@ -1,7 +1,11 @@
 import { IExecuteFunctions, IDataObject } from 'n8n-workflow';
 
-export async function handleTrialBalance(context: IExecuteFunctions, transport: any, operation: string, itemIndex: number): Promise<any> {
-  
+export async function handleTrialBalance(
+  context: IExecuteFunctions,
+  transport: any,
+  operation: string,
+  itemIndex: number
+): Promise<any> {
   switch (operation) {
     case 'get':
       const filters = context.getNodeParameter('filters', itemIndex, {}) as IDataObject;

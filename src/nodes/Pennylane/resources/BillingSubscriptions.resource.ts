@@ -1,8 +1,13 @@
 import { IExecuteFunctions, IDataObject } from 'n8n-workflow';
 
-export async function handleBillingSubscription(context: IExecuteFunctions, transport: any, operation: string, itemIndex: number): Promise<any> {
+export async function handleBillingSubscription(
+  context: IExecuteFunctions,
+  transport: any,
+  operation: string,
+  itemIndex: number
+): Promise<any> {
   const id = context.getNodeParameter('id', itemIndex, '') as string;
-  
+
   switch (operation) {
     case 'create':
       const createData = context.getNodeParameter('subscriptionData', itemIndex, {}) as IDataObject;
@@ -38,7 +43,11 @@ export async function handleBillingSubscription(context: IExecuteFunctions, tran
 
     case 'getInvoiceLineSections':
       if (!id) throw new Error('ID is required for getInvoiceLineSections operation');
-      return await transport.getAllPages(`/billing_subscriptions/${id}/invoice_line_sections`, {}, 50);
+      return await transport.getAllPages(
+        `/billing_subscriptions/${id}/invoice_line_sections`,
+        {},
+        50
+      );
 
     default:
       throw new Error(`Operation '${operation}' is not supported for billing subscriptions`);

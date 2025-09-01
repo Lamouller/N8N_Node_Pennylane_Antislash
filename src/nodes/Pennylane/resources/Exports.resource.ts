@@ -1,8 +1,13 @@
 import { IExecuteFunctions, IDataObject } from 'n8n-workflow';
 
-export async function handleExport(context: IExecuteFunctions, transport: any, operation: string, itemIndex: number): Promise<any> {
+export async function handleExport(
+  context: IExecuteFunctions,
+  transport: any,
+  operation: string,
+  itemIndex: number
+): Promise<any> {
   const id = context.getNodeParameter('id', itemIndex, '') as string;
-  
+
   switch (operation) {
     case 'create':
       const createData = context.getNodeParameter('exportData', itemIndex, {}) as IDataObject;
@@ -40,7 +45,11 @@ export async function handleExport(context: IExecuteFunctions, transport: any, o
       });
 
     case 'generateTrialBalance':
-      const trialBalanceData = context.getNodeParameter('trialBalanceData', itemIndex, {}) as IDataObject;
+      const trialBalanceData = context.getNodeParameter(
+        'trialBalanceData',
+        itemIndex,
+        {}
+      ) as IDataObject;
       return await transport.request({
         method: 'POST',
         url: '/exports/trial_balance',
@@ -48,7 +57,11 @@ export async function handleExport(context: IExecuteFunctions, transport: any, o
       });
 
     case 'generateAnalyticalLedger':
-      const analyticalLedgerData = context.getNodeParameter('analyticalLedgerData', itemIndex, {}) as IDataObject;
+      const analyticalLedgerData = context.getNodeParameter(
+        'analyticalLedgerData',
+        itemIndex,
+        {}
+      ) as IDataObject;
       return await transport.request({
         method: 'POST',
         url: '/exports/analytical_ledger',

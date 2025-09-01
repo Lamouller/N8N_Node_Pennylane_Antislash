@@ -1,8 +1,13 @@
 import { IExecuteFunctions, IDataObject } from 'n8n-workflow';
 
-export async function handleCategoryGroup(context: IExecuteFunctions, transport: any, operation: string, itemIndex: number): Promise<any> {
+export async function handleCategoryGroup(
+  context: IExecuteFunctions,
+  transport: any,
+  operation: string,
+  itemIndex: number
+): Promise<any> {
   const id = context.getNodeParameter('id', itemIndex, '') as string;
-  
+
   switch (operation) {
     case 'get':
       if (!id) throw new Error('ID is required for get operation');
@@ -17,7 +22,11 @@ export async function handleCategoryGroup(context: IExecuteFunctions, transport:
 
     case 'getCategories':
       if (!id) throw new Error('ID is required for getCategories operation');
-      const categoryFilters = context.getNodeParameter('categoryFilters', itemIndex, {}) as IDataObject;
+      const categoryFilters = context.getNodeParameter(
+        'categoryFilters',
+        itemIndex,
+        {}
+      ) as IDataObject;
       return await transport.getAllPages(`/category_groups/${id}/categories`, categoryFilters, 50);
 
     default:

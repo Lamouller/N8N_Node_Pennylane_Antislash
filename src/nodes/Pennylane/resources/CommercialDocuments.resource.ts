@@ -1,9 +1,13 @@
 import { IExecuteFunctions, IDataObject } from 'n8n-workflow';
 
-
-export async function handleCommercialDocument(context: IExecuteFunctions, transport: any, operation: string, itemIndex: number): Promise<any> {
+export async function handleCommercialDocument(
+  context: IExecuteFunctions,
+  transport: any,
+  operation: string,
+  itemIndex: number
+): Promise<any> {
   const id = context.getNodeParameter('id', itemIndex, '') as string;
-  
+
   switch (operation) {
     case 'get':
       if (!id) throw new Error('ID is required for get operation');
@@ -18,7 +22,11 @@ export async function handleCommercialDocument(context: IExecuteFunctions, trans
 
     case 'getInvoiceLineSections':
       if (!id) throw new Error('ID is required for getInvoiceLineSections operation');
-      return await transport.getAllPages(`/commercial_documents/${id}/invoice_line_sections`, {}, 50);
+      return await transport.getAllPages(
+        `/commercial_documents/${id}/invoice_line_sections`,
+        {},
+        50
+      );
 
     case 'getInvoiceLines':
       if (!id) throw new Error('ID is required for getInvoiceLines operation');
@@ -38,7 +46,7 @@ export async function handleCommercialDocument(context: IExecuteFunctions, trans
       const binaryData = item.binary;
 
       const fileData = binaryData.data!;
-      
+
       return await transport.uploadFile(
         `/commercial_documents/${id}/appendices`,
         fileData.data,
@@ -60,7 +68,13 @@ export const commercialDocumentProperties = [
     displayOptions: {
       show: {
         resource: ['commercialDocument'],
-        operation: ['get', 'getInvoiceLineSections', 'getInvoiceLines', 'getAppendices', 'uploadAppendix'],
+        operation: [
+          'get',
+          'getInvoiceLineSections',
+          'getInvoiceLines',
+          'getAppendices',
+          'uploadAppendix',
+        ],
       },
     },
     required: true,

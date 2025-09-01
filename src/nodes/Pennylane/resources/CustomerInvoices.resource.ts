@@ -1,12 +1,20 @@
 import { IExecuteFunctions, IDataObject } from 'n8n-workflow';
 
-
-export async function handleCustomerInvoice(context: IExecuteFunctions, transport: any, operation: string, itemIndex: number): Promise<any> {
+export async function handleCustomerInvoice(
+  context: IExecuteFunctions,
+  transport: any,
+  operation: string,
+  itemIndex: number
+): Promise<any> {
   const id = context.getNodeParameter('id', itemIndex, '') as string;
-  
+
   switch (operation) {
     case 'create':
-      const createData = context.getNodeParameter('customerInvoiceData', itemIndex, {}) as IDataObject;
+      const createData = context.getNodeParameter(
+        'customerInvoiceData',
+        itemIndex,
+        {}
+      ) as IDataObject;
       return await transport.request({
         method: 'POST',
         url: '/customer_invoices',
@@ -26,7 +34,11 @@ export async function handleCustomerInvoice(context: IExecuteFunctions, transpor
 
     case 'update':
       if (!id) throw new Error('ID is required for update operation');
-      const updateData = context.getNodeParameter('customerInvoiceData', itemIndex, {}) as IDataObject;
+      const updateData = context.getNodeParameter(
+        'customerInvoiceData',
+        itemIndex,
+        {}
+      ) as IDataObject;
       return await transport.request({
         method: 'PUT',
         url: `/customer_invoices/${id}`,
@@ -73,9 +85,9 @@ export async function handleCustomerInvoice(context: IExecuteFunctions, transpor
         throw new Error('No binary data found for upload');
       }
       const binaryData = item.binary;
-      
+
       const fileData = binaryData.data!;
-      
+
       return await transport.uploadFile(
         `/customer_invoices/${id}/appendix`,
         fileData.data,
@@ -89,9 +101,9 @@ export async function handleCustomerInvoice(context: IExecuteFunctions, transpor
         throw new Error('No binary data found for import');
       }
       const importBinaryData = importItem.binary;
-      
+
       const importFileData = importBinaryData.data!;
-      
+
       return await transport.uploadFile(
         '/customer_invoices/import',
         importFileData.data,
@@ -113,7 +125,15 @@ export const customerInvoiceProperties = [
     displayOptions: {
       show: {
         resource: ['customerInvoice'],
-        operation: ['get', 'update', 'delete', 'finalize', 'markAsPaid', 'sendEmail', 'uploadAppendix'],
+        operation: [
+          'get',
+          'update',
+          'delete',
+          'finalize',
+          'markAsPaid',
+          'sendEmail',
+          'uploadAppendix',
+        ],
       },
     },
     required: true,
@@ -188,14 +208,14 @@ export const customerInvoiceProperties = [
             name: 'line',
             displayName: 'Line Item',
             values: [
-                              {
-                  displayName: 'Product ID',
-                  name: 'product_id',
-                  type: 'options',
-                  loadOptionsMethod: 'loadProducts',
-                  default: '',
-                  description: 'Product for this line',
-                },
+              {
+                displayName: 'Product ID',
+                name: 'product_id',
+                type: 'options',
+                loadOptionsMethod: 'loadProducts',
+                default: '',
+                description: 'Product for this line',
+              },
               {
                 displayName: 'Label',
                 name: 'label',

@@ -1,9 +1,6 @@
-import {
-  ICredentialType,
-  INodeProperties,
-} from 'n8n-workflow';
+import { ICredentialType, INodeProperties } from 'n8n-workflow';
 
-export class PennylaneTokenApi implements ICredentialType {
+class PennylaneTokenApi implements ICredentialType {
   name = 'pennylaneTokenApi';
   displayName = 'Pennylane API';
   documentationUrl = 'https://pennylane.readme.io/';
@@ -25,7 +22,7 @@ export class PennylaneTokenApi implements ICredentialType {
       default: 'token',
       description: 'Choose your authentication method',
     },
-    
+
     // API Token fields
     {
       displayName: 'API Token',
@@ -41,7 +38,8 @@ export class PennylaneTokenApi implements ICredentialType {
       },
       default: '',
       required: true,
-      description: 'Your Pennylane company API token. Generate this in your Pennylane account settings.',
+      description:
+        'Your Pennylane company API token. Generate this in your Pennylane account settings.',
     },
     {
       displayName: 'Company ID',
@@ -56,7 +54,7 @@ export class PennylaneTokenApi implements ICredentialType {
       required: false,
       description: 'Your Pennylane company ID (optional, can be set per operation)',
     },
-    
+
     // OAuth2 fields
     {
       displayName: 'Authorization URL',
@@ -139,7 +137,7 @@ export class PennylaneTokenApi implements ICredentialType {
       required: false,
       description: 'Your Pennylane company ID for OAuth2 (optional)',
     },
-    
+
     // Common environment field
     {
       displayName: 'Environment',
@@ -160,3 +158,6 @@ export class PennylaneTokenApi implements ICredentialType {
     },
   ];
 }
+
+// Export compatible avec n8n
+export { PennylaneTokenApi as class };

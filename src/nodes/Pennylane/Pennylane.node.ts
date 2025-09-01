@@ -1,31 +1,58 @@
-import { IExecuteFunctions, ILoadOptionsFunctions, INodeExecutionData, INodeType, INodeTypeDescription } from 'n8n-workflow';
+import {
+  IExecuteFunctions,
+  ILoadOptionsFunctions,
+  INodeExecutionData,
+  INodeType,
+  INodeTypeDescription,
+} from 'n8n-workflow';
 import { createTransport } from '../../helpers/transport';
 import * as loadOptions from '../../helpers/loadOptions';
-import { handleCustomerInvoice, customerInvoiceProperties } from './resources/CustomerInvoices.resource';
+import {
+  handleCustomerInvoice,
+  customerInvoiceProperties,
+} from './resources/CustomerInvoices.resource';
 import { handleProduct, productProperties } from './resources/Products.resource';
 import { handleCustomer, customerProperties } from './resources/Customers.resource';
 import { handleSupplier, supplierProperties } from './resources/Suppliers.resource';
-import { handleSupplierInvoice, supplierInvoiceProperties } from './resources/SupplierInvoices.resource';
+import {
+  handleSupplierInvoice,
+  supplierInvoiceProperties,
+} from './resources/SupplierInvoices.resource';
 import { handleQuote, quoteProperties } from './resources/Quotes.resource';
 import { handleCategory, categoryProperties } from './resources/Categories.resource';
 import { handleBankAccount, bankAccountProperties } from './resources/BankAccounts.resource';
 import { handleTransaction, transactionProperties } from './resources/Transactions.resource';
 import { handleExport, exportProperties } from './resources/Exports.resource';
 import { handleUser, userProperties } from './resources/Users.resource';
-import { handleFileAttachment, fileAttachmentProperties } from './resources/FileAttachments.resource';
+import {
+  handleFileAttachment,
+  fileAttachmentProperties,
+} from './resources/FileAttachments.resource';
 import { handleJournal, journalProperties } from './resources/Journals.resource';
 import { handleLedgerAccount, ledgerAccountProperties } from './resources/LedgerAccounts.resource';
 import { handleLedgerEntry, ledgerEntryProperties } from './resources/LedgerEntries.resource';
 import { handleMandate, mandateProperties } from './resources/Mandates.resource';
-import { handleBillingSubscription, billingSubscriptionProperties } from './resources/BillingSubscriptions.resource';
+import {
+  handleBillingSubscription,
+  billingSubscriptionProperties,
+} from './resources/BillingSubscriptions.resource';
 import { handleEInvoice, eInvoiceProperties } from './resources/EInvoices.resource';
-import { handleLedgerEntryLine, ledgerEntryLineProperties } from './resources/LedgerEntryLines.resource';
+import {
+  handleLedgerEntryLine,
+  ledgerEntryLineProperties,
+} from './resources/LedgerEntryLines.resource';
 import { handleCategoryGroup, categoryGroupProperties } from './resources/CategoryGroups.resource';
-import { handleCustomerInvoiceTemplate, customerInvoiceTemplateProperties } from './resources/CustomerInvoiceTemplates.resource';
+import {
+  handleCustomerInvoiceTemplate,
+  customerInvoiceTemplateProperties,
+} from './resources/CustomerInvoiceTemplates.resource';
 import { handleTrialBalance, trialBalanceProperties } from './resources/TrialBalance.resource';
-import { handleCommercialDocument, commercialDocumentProperties } from './resources/CommercialDocuments.resource';
+import {
+  handleCommercialDocument,
+  commercialDocumentProperties,
+} from './resources/CommercialDocuments.resource';
 
-export class Pennylane implements INodeType {
+class Pennylane implements INodeType {
   description: INodeTypeDescription = {
     displayName: 'Pennylane',
     name: 'pennylane',
@@ -1446,16 +1473,16 @@ export class Pennylane implements INodeType {
         }
 
         if (Array.isArray(result)) {
-          returnData.push(...result.map(item => ({ json: item })));
+          returnData.push(...result.map((item) => ({ json: item })));
         } else {
           returnData.push({ json: result });
         }
       } catch (error) {
         if (this.continueOnFail()) {
-          returnData.push({ 
-            json: { 
-              error: error instanceof Error ? error.message : 'Unknown error'
-            } 
+          returnData.push({
+            json: {
+              error: error instanceof Error ? error.message : 'Unknown error',
+            },
           });
           continue;
         }
@@ -1465,5 +1492,7 @@ export class Pennylane implements INodeType {
 
     return [returnData];
   }
-
 }
+
+// Export compatible avec n8n
+export { Pennylane as class };

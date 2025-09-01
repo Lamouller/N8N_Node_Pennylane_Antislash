@@ -1,12 +1,20 @@
 import { IExecuteFunctions, IDataObject } from 'n8n-workflow';
 
-
-export async function handleSupplierInvoice(context: IExecuteFunctions, transport: any, operation: string, itemIndex: number): Promise<any> {
+export async function handleSupplierInvoice(
+  context: IExecuteFunctions,
+  transport: any,
+  operation: string,
+  itemIndex: number
+): Promise<any> {
   const id = context.getNodeParameter('id', itemIndex, '') as string;
-  
+
   switch (operation) {
     case 'create':
-      const createData = context.getNodeParameter('supplierInvoiceData', itemIndex, {}) as IDataObject;
+      const createData = context.getNodeParameter(
+        'supplierInvoiceData',
+        itemIndex,
+        {}
+      ) as IDataObject;
       return await transport.request({
         method: 'POST',
         url: '/supplier_invoices',
@@ -26,7 +34,11 @@ export async function handleSupplierInvoice(context: IExecuteFunctions, transpor
 
     case 'update':
       if (!id) throw new Error('ID is required for update operation');
-      const updateData = context.getNodeParameter('supplierInvoiceData', itemIndex, {}) as IDataObject;
+      const updateData = context.getNodeParameter(
+        'supplierInvoiceData',
+        itemIndex,
+        {}
+      ) as IDataObject;
       return await transport.request({
         method: 'PUT',
         url: `/supplier_invoices/${id}`,
@@ -57,9 +69,9 @@ export async function handleSupplierInvoice(context: IExecuteFunctions, transpor
         throw new Error('No binary data found for upload');
       }
       const binaryData = item.binary;
-      
+
       const fileData = binaryData.data!;
-      
+
       return await transport.uploadFile(
         `/supplier_invoices/${id}/file`,
         fileData.data,
@@ -73,9 +85,9 @@ export async function handleSupplierInvoice(context: IExecuteFunctions, transpor
         throw new Error('No binary data found for import');
       }
       const importBinaryData = importItem.binary;
-      
+
       const importFileData = importBinaryData.data!;
-      
+
       return await transport.uploadFile(
         '/supplier_invoices/import',
         importFileData.data,

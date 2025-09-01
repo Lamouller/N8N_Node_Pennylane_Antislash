@@ -1,7 +1,13 @@
-import { ITriggerFunctions, INodeType, INodeTypeDescription, IDataObject, ITriggerResponse } from 'n8n-workflow';
+import {
+  ITriggerFunctions,
+  INodeType,
+  INodeTypeDescription,
+  IDataObject,
+  ITriggerResponse,
+} from 'n8n-workflow';
 import { createTransport } from '../../helpers/transport';
 
-export class PennylaneTrigger implements INodeType {
+class PennylaneTrigger implements INodeType {
   description: INodeTypeDescription = {
     displayName: 'Pennylane Trigger',
     name: 'pennylaneTrigger',
@@ -221,7 +227,7 @@ export class PennylaneTrigger implements INodeType {
         const changelogData = await transport.getAllPages(
           `/changelogs/${resourceToWatch}`,
           params,
-          additionalFields.maxItems as number || 1000
+          (additionalFields.maxItems as number) || 1000
         );
 
         if (changelogData.length > 0) {
@@ -231,13 +237,15 @@ export class PennylaneTrigger implements INodeType {
 
           // Emit each change as a separate item
           for (const change of changelogData) {
-            this.emit([{
-              json: {
-                ...change,
-                _triggerResource: resourceToWatch,
-                _triggerTimestamp: new Date().toISOString(),
+            this.emit([
+              {
+                json: {
+                  ...change,
+                  _triggerResource: resourceToWatch,
+                  _triggerTimestamp: new Date().toISOString(),
+                },
               },
-            }] as any);
+            ] as any);
           }
         }
       } catch (error) {
@@ -260,3 +268,6 @@ export class PennylaneTrigger implements INodeType {
     } as any;
   }
 }
+
+// Export compatible avec n8n
+export { PennylaneTrigger as class };
