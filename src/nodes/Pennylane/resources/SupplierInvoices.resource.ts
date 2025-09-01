@@ -101,7 +101,7 @@ export const supplierInvoiceProperties = [
   // Supplier Invoice ID field
   {
     displayName: 'Invoice ID',
-    name: 'id',
+    name: 'supplierInvoiceId',
     type: 'string',
     default: '',
     displayOptions: {
@@ -212,7 +212,7 @@ export const supplierInvoiceProperties = [
   // Payment Data for markAsPaid
   {
     displayName: 'Payment Data',
-    name: 'paymentData',
+    name: 'supplierInvoicePaymentData',
     type: 'collection',
     placeholder: 'Add Field',
     displayOptions: {
@@ -259,7 +259,7 @@ export const supplierInvoiceProperties = [
   // Filters for getAll
   {
     displayName: 'Filters',
-    name: 'filters',
+    name: 'supplierInvoiceFilters',
     type: 'collection',
     placeholder: 'Add Filter',
     displayOptions: {

@@ -59,7 +59,7 @@ export const commercialDocumentProperties = [
   // Commercial Document ID field
   {
     displayName: 'Commercial Document ID',
-    name: 'id',
+    name: 'commercialdocumentId',
     type: 'string',
     default: '',
     displayOptions: {
@@ -75,7 +75,7 @@ export const commercialDocumentProperties = [
   // Filters for getAll
   {
     displayName: 'Filters',
-    name: 'filters',
+    name: 'commercialdocumentFilters',
     type: 'collection',
     placeholder: 'Add Filter',
     displayOptions: {

@@ -48,7 +48,7 @@ export const bankAccountProperties = [
   // Bank Account ID field
   {
     displayName: 'Bank Account ID',
-    name: 'id',
+    name: 'bankAccountId',
     type: 'string',
     default: '',
     displayOptions: {
@@ -143,7 +143,7 @@ export const bankAccountProperties = [
   // Filters for getAll
   {
     displayName: 'Filters',
-    name: 'filters',
+    name: 'bankAccountFilters',
     type: 'collection',
     placeholder: 'Add Filter',
     displayOptions: {

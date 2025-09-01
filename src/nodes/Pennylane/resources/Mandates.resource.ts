@@ -94,7 +94,7 @@ export const mandateProperties = [
   // Mandate ID field
   {
     displayName: 'Mandate ID',
-    name: 'id',
+    name: 'mandateId',
     type: 'string',
     default: '',
     displayOptions: {
@@ -169,7 +169,7 @@ export const mandateProperties = [
   // GoCardless Email Data
   {
     displayName: 'Email Data',
-    name: 'emailData',
+    name: 'mandateEmailData',
     type: 'collection',
     placeholder: 'Add Field',
     displayOptions: {
@@ -233,7 +233,7 @@ export const mandateProperties = [
   // Filters for getAll
   {
     displayName: 'Filters',
-    name: 'filters',
+    name: 'mandateFilters',
     type: 'collection',
     placeholder: 'Add Filter',
     displayOptions: {

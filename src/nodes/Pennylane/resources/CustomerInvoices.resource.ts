@@ -117,7 +117,7 @@ export const customerInvoiceProperties = [
   // Customer Invoice ID field
   {
     displayName: 'Invoice ID',
-    name: 'id',
+    name: 'customerInvoiceId',
     type: 'string',
     default: '',
     displayOptions: {
@@ -254,7 +254,7 @@ export const customerInvoiceProperties = [
   // Payment Data for markAsPaid
   {
     displayName: 'Payment Data',
-    name: 'paymentData',
+    name: 'customerInvoicePaymentData',
     type: 'collection',
     placeholder: 'Add Field',
     displayOptions: {
@@ -291,7 +291,7 @@ export const customerInvoiceProperties = [
   // Email Data for sendEmail
   {
     displayName: 'Email Data',
-    name: 'emailData',
+    name: 'customerInvoiceEmailData',
     type: 'collection',
     placeholder: 'Add Field',
     displayOptions: {
@@ -325,7 +325,7 @@ export const customerInvoiceProperties = [
   // Filters for getAll
   {
     displayName: 'Filters',
-    name: 'filters',
+    name: 'customerInvoiceFilters',
     type: 'collection',
     placeholder: 'Add Filter',
     displayOptions: {

@@ -78,7 +78,7 @@ export const quoteProperties = [
   // Quote ID field
   {
     displayName: 'Quote ID',
-    name: 'id',
+    name: 'quoteId',
     type: 'string',
     default: '',
     displayOptions: {
@@ -216,7 +216,7 @@ export const quoteProperties = [
   // Email Data for sendEmail
   {
     displayName: 'Email Data',
-    name: 'emailData',
+    name: 'quoteEmailData',
     type: 'collection',
     placeholder: 'Add Field',
     displayOptions: {
@@ -250,7 +250,7 @@ export const quoteProperties = [
   // Filters for getAll
   {
     displayName: 'Filters',
-    name: 'filters',
+    name: 'quoteFilters',
     type: 'collection',
     placeholder: 'Add Filter',
     displayOptions: {

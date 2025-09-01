@@ -45,7 +45,7 @@ export const ledgerEntryProperties = [
   // Ledger Entry ID field
   {
     displayName: 'Ledger Entry ID',
-    name: 'id',
+    name: 'ledgerentrieId',
     type: 'string',
     default: '',
     displayOptions: {
@@ -161,7 +161,7 @@ export const ledgerEntryProperties = [
   // Filters for getAll
   {
     displayName: 'Filters',
-    name: 'filters',
+    name: 'ledgerentrieFilters',
     type: 'collection',
     placeholder: 'Add Filter',
     displayOptions: {

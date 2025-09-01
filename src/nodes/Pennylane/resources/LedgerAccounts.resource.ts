@@ -32,7 +32,7 @@ export const ledgerAccountProperties = [
   // Ledger Account ID field
   {
     displayName: 'Ledger Account ID',
-    name: 'id',
+    name: 'ledgerAccountId',
     type: 'string',
     default: '',
     displayOptions: {
@@ -110,7 +110,7 @@ export const ledgerAccountProperties = [
   // Filters for getAll
   {
     displayName: 'Filters',
-    name: 'filters',
+    name: 'ledgerAccountFilters',
     type: 'collection',
     placeholder: 'Add Filter',
     displayOptions: {

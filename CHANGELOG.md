@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.6.0] - 2025-01-09
+
+### 🔥 CRITICAL FIX - Workflow Validation Issues Resolved
+
+#### Fixed
+- **CRITICAL**: Fixed duplicate property names causing "workflow has issues" error
+- Renamed 58 duplicate properties across all resources with unique prefixes
+- Resolved property name conflicts between resources (e.g., customerId vs customerInvoiceId)
+- Fixed categoryGroupFilters duplication within same resource file
+- Workflow validation now passes correctly
+
+#### Changed
+- Property naming now follows resource-specific prefixes to avoid conflicts
+- Examples: `id` → `customerId`, `customerInvoiceId`, `supplierId`, etc.
+- All resources now have unique property names throughout the node
+
+### User Impact
+- **🎯 WORKFLOW ERRORS FIXED**: No more "workflow has issues" blocking execution
+- **✅ CLEAN VALIDATION**: n8n workflow validation passes successfully
+- **🚀 READY FOR USE**: All blocking issues resolved
+
 ## [2.5.0] - 2023-12-XX
 
 ### 🎆 FINAL PRODUCTION VERSION - Test Property Removed

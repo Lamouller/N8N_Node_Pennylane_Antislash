@@ -20,7 +20,7 @@ export const trialBalanceProperties = [
   // Filters for get
   {
     displayName: 'Filters',
-    name: 'filters',
+    name: 'trialbalanceFilters',
     type: 'collection',
     placeholder: 'Add Filter',
     displayOptions: {

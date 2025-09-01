@@ -57,7 +57,7 @@ export const transactionProperties = [
   // Transaction ID field
   {
     displayName: 'Transaction ID',
-    name: 'id',
+    name: 'transactionId',
     type: 'string',
     default: '',
     displayOptions: {
@@ -185,7 +185,7 @@ export const transactionProperties = [
   // Filters for getAll
   {
     displayName: 'Filters',
-    name: 'filters',
+    name: 'transactionFilters',
     type: 'collection',
     placeholder: 'Add Filter',
     displayOptions: {

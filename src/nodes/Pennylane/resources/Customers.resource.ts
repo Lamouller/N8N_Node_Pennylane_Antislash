@@ -48,7 +48,7 @@ export const customerProperties = [
   // Customer ID field
   {
     displayName: 'Customer ID',
-    name: 'id',
+    name: 'customerId',
     type: 'string',
     default: '',
     displayOptions: {
@@ -182,7 +182,7 @@ export const customerProperties = [
   // Filters for getAll
   {
     displayName: 'Filters',
-    name: 'filters',
+    name: 'customerFilters',
     type: 'collection',
     placeholder: 'Add Filter',
     displayOptions: {

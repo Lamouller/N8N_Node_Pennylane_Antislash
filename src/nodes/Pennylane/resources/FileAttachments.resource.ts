@@ -77,7 +77,7 @@ export const fileAttachmentProperties = [
   // File Attachment ID field
   {
     displayName: 'File Attachment ID',
-    name: 'id',
+    name: 'fileattachmentId',
     type: 'string',
     default: '',
     displayOptions: {
@@ -172,7 +172,7 @@ export const fileAttachmentProperties = [
   // Filters for getAll
   {
     displayName: 'Filters',
-    name: 'filters',
+    name: 'fileattachmentFilters',
     type: 'collection',
     placeholder: 'Add Filter',
     displayOptions: {

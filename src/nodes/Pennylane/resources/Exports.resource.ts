@@ -64,7 +64,7 @@ export const exportProperties = [
   // Export ID field
   {
     displayName: 'Export ID',
-    name: 'id',
+    name: 'exportId',
     type: 'string',
     default: '',
     displayOptions: {
@@ -261,7 +261,7 @@ export const exportProperties = [
   // Filters for getAll
   {
     displayName: 'Filters',
-    name: 'filters',
+    name: 'exportFilters',
     type: 'collection',
     placeholder: 'Add Filter',
     displayOptions: {

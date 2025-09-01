@@ -16,7 +16,7 @@ export const customerInvoiceTemplateProperties = [
   // Filters for getAll
   {
     displayName: 'Filters',
-    name: 'filters',
+    name: 'customerTemplateFilters',
     type: 'collection',
     placeholder: 'Add Filter',
     displayOptions: {

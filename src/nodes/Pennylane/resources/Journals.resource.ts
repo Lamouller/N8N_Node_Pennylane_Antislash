@@ -32,7 +32,7 @@ export const journalProperties = [
   // Journal ID field
   {
     displayName: 'Journal ID',
-    name: 'id',
+    name: 'journalId',
     type: 'string',
     default: '',
     displayOptions: {
@@ -104,7 +104,7 @@ export const journalProperties = [
   // Filters for getAll
   {
     displayName: 'Filters',
-    name: 'filters',
+    name: 'journalFilters',
     type: 'collection',
     placeholder: 'Add Filter',
     displayOptions: {

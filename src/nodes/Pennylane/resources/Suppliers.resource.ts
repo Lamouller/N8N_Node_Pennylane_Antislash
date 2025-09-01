@@ -48,7 +48,7 @@ export const supplierProperties = [
   // Supplier ID field
   {
     displayName: 'Supplier ID',
-    name: 'id',
+    name: 'supplierId',
     type: 'string',
     default: '',
     displayOptions: {
@@ -196,7 +196,7 @@ export const supplierProperties = [
   // Filters for getAll
   {
     displayName: 'Filters',
-    name: 'filters',
+    name: 'supplierFilters',
     type: 'collection',
     placeholder: 'Add Filter',
     displayOptions: {

@@ -49,7 +49,7 @@ export const billingSubscriptionProperties = [
   // Billing Subscription ID field
   {
     displayName: 'Billing Subscription ID',
-    name: 'id',
+    name: 'billingSubscriptionId',
     type: 'string',
     default: '',
     displayOptions: {
@@ -162,7 +162,7 @@ export const billingSubscriptionProperties = [
   // Filters for getAll
   {
     displayName: 'Filters',
-    name: 'filters',
+    name: 'billingSubscriptionFilters',
     type: 'collection',
     placeholder: 'Add Filter',
     displayOptions: {

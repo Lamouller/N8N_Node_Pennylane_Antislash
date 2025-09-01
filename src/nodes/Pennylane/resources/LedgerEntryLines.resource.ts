@@ -57,7 +57,7 @@ export const ledgerEntryLineProperties = [
   // Ledger Entry Line ID field
   {
     displayName: 'Ledger Entry Line ID',
-    name: 'id',
+    name: 'ledgerEntryId',
     type: 'string',
     default: '',
     displayOptions: {
@@ -182,7 +182,7 @@ export const ledgerEntryLineProperties = [
   // Filters for getAll
   {
     displayName: 'Filters',
-    name: 'filters',
+    name: 'ledgerEntryFilters',
     type: 'collection',
     placeholder: 'Add Filter',
     displayOptions: {

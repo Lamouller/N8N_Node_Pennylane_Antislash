@@ -48,7 +48,7 @@ export const productProperties = [
   // Product ID field
   {
     displayName: 'Product ID',
-    name: 'id',
+    name: 'productId',
     type: 'string',
     default: '',
     displayOptions: {
@@ -160,7 +160,7 @@ export const productProperties = [
   // Filters for getAll
   {
     displayName: 'Filters',
-    name: 'filters',
+    name: 'productFilters',
     type: 'collection',
     placeholder: 'Add Filter',
     displayOptions: {

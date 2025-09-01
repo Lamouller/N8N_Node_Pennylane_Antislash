@@ -63,7 +63,7 @@ export const userProperties = [
   // User ID field
   {
     displayName: 'User ID',
-    name: 'id',
+    name: 'userId',
     type: 'string',
     default: '',
     displayOptions: {
@@ -193,7 +193,7 @@ export const userProperties = [
   // Filters for getAll
   {
     displayName: 'Filters',
-    name: 'filters',
+    name: 'userFilters',
     type: 'collection',
     placeholder: 'Add Filter',
     displayOptions: {

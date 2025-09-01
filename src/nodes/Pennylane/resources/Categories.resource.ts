@@ -48,7 +48,7 @@ export const categoryProperties = [
   // Category ID field
   {
     displayName: 'Category ID',
-    name: 'id',
+    name: 'categorieId',
     type: 'string',
     default: '',
     displayOptions: {
@@ -120,7 +120,7 @@ export const categoryProperties = [
   // Filters for getAll
   {
     displayName: 'Filters',
-    name: 'filters',
+    name: 'categorieFilters',
     type: 'collection',
     placeholder: 'Add Filter',
     displayOptions: {

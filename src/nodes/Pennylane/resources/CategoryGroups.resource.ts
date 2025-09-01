@@ -29,7 +29,7 @@ export const categoryGroupProperties = [
   // Category Group ID field
   {
     displayName: 'Category Group ID',
-    name: 'id',
+    name: 'categoryGroupId',
     type: 'string',
     default: '',
     displayOptions: {
@@ -45,7 +45,7 @@ export const categoryGroupProperties = [
   // Category Filters for getCategories
   {
     displayName: 'Category Filters',
-    name: 'categoryFilters',
+    name: 'categoryGroupFilters',
     type: 'collection',
     placeholder: 'Add Filter',
     displayOptions: {
@@ -76,7 +76,7 @@ export const categoryGroupProperties = [
   // Filters for getAll
   {
     displayName: 'Filters',
-    name: 'filters',
+    name: 'categoryGroupGetAllFilters',
     type: 'collection',
     placeholder: 'Add Filter',
     displayOptions: {
