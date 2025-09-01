@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.0] - 2023-12-XX
+
+### 🔧 CRITICAL COMPATIBILITY FIX - Based on Working Nodes Analysis
+- **📊 Analysis**: Compared with working antislash nodes (axonaut, dendreo)
+- **🔄 n8nNodesApiVersion**: Fixed to 1 (was 2) - matching working nodes
+- **📺 Dependencies**: Moved `n8n-workflow` to `dependencies` (was `devDependencies`)
+- **🧩 Clean Structure**: Removed obsolete OAuth2 credential reference
+- **⚙️ Compatibility**: Aligned with successful node patterns from antislash
+
+### Why This Fixes the Issue
+- Your working nodes use `n8nNodesApiVersion: 1`
+- Your working nodes have `n8n-workflow` in dependencies
+- Simpler credential structure (single unified credential)
+- Follows exact same pattern as your successful nodes
+
+### User Impact
+- **🎆 Should work exactly like your other nodes now!**
+- Same dependency management as axonaut/dendreo
+- Compatible with your n8n setup
+- No configuration changes needed
+
 ## [2.2.0] - 2023-12-XX
 
 ### 🚀 CRITICAL API FIX - Node Now Actually Works!
