@@ -154,7 +154,7 @@ https://pennylane.readme.io/reference
 
 ## 🐛 Support
 
-- **Issues** : [GitHub Issues](https://github.com/Lamouller/n8n-nodes-pennylane-new-antislash/issues)
+- **Issues** : [GitHub Issues](https://github.com/trystanlamouller/n8n-nodes-pennylane-new-antislash/issues)
 - **Documentation** : [Pennylane API Docs](https://pennylane.readme.io/reference)
 
 ## 📄 License
@@ -163,7 +163,7 @@ MIT
 
 ## 🎉 Contributors
 
-Développé par Lamouller - [@Lamouller](https://github.com/Lamouller)
+Développé par Trystan Lamouller - [@trystanlamouller](https://github.com/trystanlamouller)
 
 ---
 

@@ -87,3 +87,4 @@ Smart Polling: ❌
 Poll Interval: 1 min
 (Intervalle fixe, consomme plus d'API)
 ```
+

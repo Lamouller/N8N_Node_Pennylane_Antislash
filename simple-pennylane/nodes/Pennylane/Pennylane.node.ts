@@ -1760,7 +1760,6 @@ export class Pennylane implements INodeType {
           show: { 
             resource: ['changelogCustomerInvoices'],
             operation: ['get'],
-            changelogCustomerInvoicesSelectionMode: ['list']
           },
         },
         default: '',
@@ -1775,7 +1774,6 @@ export class Pennylane implements INodeType {
           show: { 
             resource: ['changelogCustomerInvoices'],
             operation: ['get'],
-            changelogCustomerInvoicesSelectionMode: ['manual']
           },
         },
         default: '',
@@ -1812,7 +1810,6 @@ export class Pennylane implements INodeType {
           show: { 
             resource: ['changelogSupplierInvoices'],
             operation: ['get'],
-            changelogSupplierInvoicesSelectionMode: ['list']
           },
         },
         default: '',
@@ -1827,7 +1824,6 @@ export class Pennylane implements INodeType {
           show: { 
             resource: ['changelogSupplierInvoices'],
             operation: ['get'],
-            changelogSupplierInvoicesSelectionMode: ['manual']
           },
         },
         default: '',
@@ -1864,7 +1860,6 @@ export class Pennylane implements INodeType {
           show: { 
             resource: ['changelogCustomers'],
             operation: ['get'],
-            changelogCustomersSelectionMode: ['list']
           },
         },
         default: '',
@@ -1879,7 +1874,6 @@ export class Pennylane implements INodeType {
           show: { 
             resource: ['changelogCustomers'],
             operation: ['get'],
-            changelogCustomersSelectionMode: ['manual']
           },
         },
         default: '',
@@ -1916,7 +1910,6 @@ export class Pennylane implements INodeType {
           show: { 
             resource: ['changelogSuppliers'],
             operation: ['get'],
-            changelogSuppliersSelectionMode: ['list']
           },
         },
         default: '',
@@ -1931,7 +1924,6 @@ export class Pennylane implements INodeType {
           show: { 
             resource: ['changelogSuppliers'],
             operation: ['get'],
-            changelogSuppliersSelectionMode: ['manual']
           },
         },
         default: '',
@@ -1968,7 +1960,6 @@ export class Pennylane implements INodeType {
           show: { 
             resource: ['changelogProducts'],
             operation: ['get'],
-            changelogProductsSelectionMode: ['list']
           },
         },
         default: '',
@@ -1983,7 +1974,6 @@ export class Pennylane implements INodeType {
           show: { 
             resource: ['changelogProducts'],
             operation: ['get'],
-            changelogProductsSelectionMode: ['manual']
           },
         },
         default: '',
@@ -2020,7 +2010,6 @@ export class Pennylane implements INodeType {
           show: { 
             resource: ['changelogLedgerEntryLines'],
             operation: ['get'],
-            changelogLedgerEntryLinesSelectionMode: ['list']
           },
         },
         default: '',
@@ -2035,7 +2024,6 @@ export class Pennylane implements INodeType {
           show: { 
             resource: ['changelogLedgerEntryLines'],
             operation: ['get'],
-            changelogLedgerEntryLinesSelectionMode: ['manual']
           },
         },
         default: '',
@@ -2072,7 +2060,6 @@ export class Pennylane implements INodeType {
           show: { 
             resource: ['changelogTransactions'],
             operation: ['get'],
-            changelogTransactionsSelectionMode: ['list']
           },
         },
         default: '',
@@ -2087,7 +2074,6 @@ export class Pennylane implements INodeType {
           show: { 
             resource: ['changelogTransactions'],
             operation: ['get'],
-            changelogTransactionsSelectionMode: ['manual']
           },
         },
         default: '',
@@ -2713,14 +2699,6 @@ export class Pennylane implements INodeType {
       billingSubscription: 'billing_subscriptions',
       
       // CHANGELOGS
-      changelogCustomerInvoices: 'changelogs/customer_invoices',
-      changelogSupplierInvoices: 'changelogs/supplier_invoices',
-      changelogPayments: 'changelogs/transactions', // Transactions include payment events
-      changelogCustomers: 'changelogs/customers',
-      changelogSuppliers: 'changelogs/suppliers',
-      changelogProducts: 'changelogs/products',
-      changelogLedgerEntryLines: 'changelogs/ledger_entry_lines',
-      changelogTransactions: 'changelogs/transactions',
       
       // MANDATES
       sepaMandate: 'customer_mandates',
