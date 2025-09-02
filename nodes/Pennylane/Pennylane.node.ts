@@ -67,14 +67,6 @@ export class Pennylane implements INodeType {
           
           // 🔄 SUBSCRIPTION & MONITORING
           { name: '🔄 Billing Subscription', value: 'billingSubscription' },
-          { name: '📋 Customer Invoice Changes', value: 'changelogCustomerInvoices' },
-          { name: '📋 Supplier Invoice Changes', value: 'changelogSupplierInvoices' },
-          { name: '💰 Payment Changes', value: 'changelogPayments' },
-          { name: '📋 Customer Changes', value: 'changelogCustomers' },
-          { name: '📋 Supplier Changes', value: 'changelogSuppliers' },
-          { name: '📋 Product Changes', value: 'changelogProducts' },
-          { name: '📋 Ledger Entry Line Changes', value: 'changelogLedgerEntryLines' },
-          { name: '📋 Transaction Changes', value: 'changelogTransactions' },
           
           // 📋 INVOICE DETAILS
           { name: '📋 Invoice Lines', value: 'invoiceLines' },
@@ -164,26 +156,6 @@ export class Pennylane implements INodeType {
         description: 'SEPA mandates - CREATE and DELETE only (GET endpoints return HTML)',
       },
       
-      // Operations pour les 7 endpoints Changelog (avec support ID)
-      {
-        displayName: 'Operation',
-        name: 'operation',
-        type: 'options',
-        displayOptions: {
-          show: { 
-            resource: [
-              'changelogCustomerInvoices', 'changelogSupplierInvoices', 'changelogCustomers',
-              'changelogSuppliers', 'changelogProducts', 'changelogLedgerEntryLines', 'changelogTransactions'
-            ]
-          },
-        },
-        options: [
-          { name: 'Get All Changes', value: 'getAll' },
-          { name: 'Get Change by ID', value: 'get' },
-        ],
-        default: 'getAll',
-        description: 'Changelog operations (monitoring changes)',
-      },
       
       // Operations spéciales pour Trial Balance et Fiscal Year (rapports uniquement)
       {
@@ -1534,6 +1506,78 @@ export class Pennylane implements INodeType {
         required: true,
       },
       
+      // Notice générale pour GET ALL
+      {
+        displayName: '🔄 Auto-Split Info',
+        name: 'getAllSplitNotice',
+        type: 'notice',
+        default: '',
+        displayOptions: {
+          show: { 
+            operation: ['getAll'],
+            resource: ['customerInvoice', 'supplierInvoice', 'customer', 'supplier', 'product', 'transaction', 'category', 'ledgerEntryLine', 'journal']
+          },
+        },
+        typeOptions: {
+          theme: 'success',
+        },
+        description: `### 🔄 Auto-Split Activé
+**Chaque item sera un output séparé** - parfait pour les workflows n8n !
+- 📦 **1 item** = **1 output** (au lieu d'un gros JSON avec array)
+- 🚀 **Plus pratique** pour traiter individuellement
+- ✅ **Compatible** avec tous les noeuds n8n suivants`,
+      },
+      
+      // Notice pour Payment GET ALL
+      {
+        displayName: '📊 Payment GET ALL Info',
+        name: 'paymentGetAllNotice',
+        type: 'notice',
+        default: '',
+        displayOptions: {
+          show: { 
+            resource: ['payment'],
+            operation: ['getAll']
+          },
+        },
+        typeOptions: {
+          theme: 'info',
+        },
+        description: `### 💰 Payment GET ALL - Vue Simplifiée
+**Retourne TOUTES les factures** avec leur statut de paiement :
+- 📄 **Une entrée par facture** (payée ou non payée)
+- ✅ **Statut \`paid_status\`** : true/false pour chaque facture
+- 💰 **Transactions incluses** : array des paiements (vide si aucun)
+- 📊 **Métadonnées complètes** : montant, date, numéro, client/fournisseur
+- 🔄 **Auto-split** : Chaque facture = 1 output séparé
+
+**Usage** : Filtrez ensuite avec les nœuds n8n (IF, Filter, etc.) selon vos besoins.`,
+      },
+      
+      // Notice pour Payment GET (specific)
+      {
+        displayName: '🎯 Payment GET Info',
+        name: 'paymentGetNotice',
+        type: 'notice',
+        default: '',
+        displayOptions: {
+          show: { 
+            resource: ['payment'],
+            operation: ['get']
+          },
+        },
+        typeOptions: {
+          theme: 'warning',
+        },
+        description: `### 🎯 Payment GET (Specific Invoice)
+**Récupère les transactions matchées d'une facture spécifique** :
+- 📋 Sélectionnez le type (Client/Fournisseur)
+- 🧾 Choisissez la facture dans la liste
+- 💸 Obtenez toutes les transactions bancaires de cette facture
+
+**Note** : Utilise /matched_transactions (vrais paiements bancaires).`,
+      },
+      
       // Champs spécialisés pour Payment
       {
         displayName: 'Payment Type',
@@ -1542,7 +1586,7 @@ export class Pennylane implements INodeType {
         displayOptions: {
           show: { 
             resource: ['payment'],
-            operation: ['getAll', 'get']
+            operation: ['get']
           },
         },
         options: [
@@ -1563,7 +1607,7 @@ export class Pennylane implements INodeType {
         displayOptions: {
           show: { 
             resource: ['payment'],
-            operation: ['getAll', 'get'],
+            operation: ['get'],
             paymentType: ['customer']
           },
         },
@@ -1581,7 +1625,7 @@ export class Pennylane implements INodeType {
         displayOptions: {
           show: { 
             resource: ['payment'],
-            operation: ['getAll', 'get'],
+            operation: ['get'],
             paymentType: ['supplier']
           },
         },
@@ -1730,356 +1774,6 @@ export class Pennylane implements INodeType {
       },
       
       // === SÉLECTEURS CHANGELOG ===
-      
-      // Changelog Customer Invoices
-      {
-        displayName: 'Selection Mode',
-        name: 'changelogCustomerInvoicesSelectionMode',
-        type: 'options',
-        displayOptions: {
-          show: { 
-            resource: ['changelogCustomerInvoices'],
-            operation: ['get']
-          },
-        },
-        options: [
-          { name: '📋 Select from List', value: 'list' },
-          { name: '✏️ Enter Custom ID', value: 'manual' },
-        ],
-        default: 'list',
-        description: 'Choose how to select the changelog entry',
-      },
-      {
-        displayName: 'Customer Invoice Changelog',
-        name: 'changelogCustomerInvoicesId',
-        type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'getChangelogCustomerInvoices',
-        },
-        displayOptions: {
-          show: { 
-            resource: ['changelogCustomerInvoices'],
-            operation: ['get'],
-          },
-        },
-        default: '',
-        description: 'Select changelog entry from list',
-        required: true,
-      },
-      {
-        displayName: 'Changelog ID',
-        name: 'changelogCustomerInvoicesIdManual',
-        type: 'string',
-        displayOptions: {
-          show: { 
-            resource: ['changelogCustomerInvoices'],
-            operation: ['get'],
-          },
-        },
-        default: '',
-        description: 'Enter changelog ID manually',
-        required: true,
-      },
-      
-      // Changelog Supplier Invoices
-      {
-        displayName: 'Selection Mode',
-        name: 'changelogSupplierInvoicesSelectionMode',
-        type: 'options',
-        displayOptions: {
-          show: { 
-            resource: ['changelogSupplierInvoices'],
-            operation: ['get']
-          },
-        },
-        options: [
-          { name: '📋 Select from List', value: 'list' },
-          { name: '✏️ Enter Custom ID', value: 'manual' },
-        ],
-        default: 'list',
-        description: 'Choose how to select the changelog entry',
-      },
-      {
-        displayName: 'Supplier Invoice Changelog',
-        name: 'changelogSupplierInvoicesId',
-        type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'getChangelogSupplierInvoices',
-        },
-        displayOptions: {
-          show: { 
-            resource: ['changelogSupplierInvoices'],
-            operation: ['get'],
-          },
-        },
-        default: '',
-        description: 'Select changelog entry from list',
-        required: true,
-      },
-      {
-        displayName: 'Changelog ID',
-        name: 'changelogSupplierInvoicesIdManual',
-        type: 'string',
-        displayOptions: {
-          show: { 
-            resource: ['changelogSupplierInvoices'],
-            operation: ['get'],
-          },
-        },
-        default: '',
-        description: 'Enter changelog ID manually',
-        required: true,
-      },
-      
-      // Changelog Customers
-      {
-        displayName: 'Selection Mode',
-        name: 'changelogCustomersSelectionMode',
-        type: 'options',
-        displayOptions: {
-          show: { 
-            resource: ['changelogCustomers'],
-            operation: ['get']
-          },
-        },
-        options: [
-          { name: '📋 Select from List', value: 'list' },
-          { name: '✏️ Enter Custom ID', value: 'manual' },
-        ],
-        default: 'list',
-        description: 'Choose how to select the changelog entry',
-      },
-      {
-        displayName: 'Customer Changelog',
-        name: 'changelogCustomersId',
-        type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'getChangelogCustomers',
-        },
-        displayOptions: {
-          show: { 
-            resource: ['changelogCustomers'],
-            operation: ['get'],
-          },
-        },
-        default: '',
-        description: 'Select changelog entry from list',
-        required: true,
-      },
-      {
-        displayName: 'Changelog ID',
-        name: 'changelogCustomersIdManual',
-        type: 'string',
-        displayOptions: {
-          show: { 
-            resource: ['changelogCustomers'],
-            operation: ['get'],
-          },
-        },
-        default: '',
-        description: 'Enter changelog ID manually',
-        required: true,
-      },
-      
-      // Changelog Suppliers
-      {
-        displayName: 'Selection Mode',
-        name: 'changelogSuppliersSelectionMode',
-        type: 'options',
-        displayOptions: {
-          show: { 
-            resource: ['changelogSuppliers'],
-            operation: ['get']
-          },
-        },
-        options: [
-          { name: '📋 Select from List', value: 'list' },
-          { name: '✏️ Enter Custom ID', value: 'manual' },
-        ],
-        default: 'list',
-        description: 'Choose how to select the changelog entry',
-      },
-      {
-        displayName: 'Supplier Changelog',
-        name: 'changelogSuppliersId',
-        type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'getChangelogSuppliers',
-        },
-        displayOptions: {
-          show: { 
-            resource: ['changelogSuppliers'],
-            operation: ['get'],
-          },
-        },
-        default: '',
-        description: 'Select changelog entry from list',
-        required: true,
-      },
-      {
-        displayName: 'Changelog ID',
-        name: 'changelogSuppliersIdManual',
-        type: 'string',
-        displayOptions: {
-          show: { 
-            resource: ['changelogSuppliers'],
-            operation: ['get'],
-          },
-        },
-        default: '',
-        description: 'Enter changelog ID manually',
-        required: true,
-      },
-      
-      // Changelog Products
-      {
-        displayName: 'Selection Mode',
-        name: 'changelogProductsSelectionMode',
-        type: 'options',
-        displayOptions: {
-          show: { 
-            resource: ['changelogProducts'],
-            operation: ['get']
-          },
-        },
-        options: [
-          { name: '📋 Select from List', value: 'list' },
-          { name: '✏️ Enter Custom ID', value: 'manual' },
-        ],
-        default: 'list',
-        description: 'Choose how to select the changelog entry',
-      },
-      {
-        displayName: 'Product Changelog',
-        name: 'changelogProductsId',
-        type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'getChangelogProducts',
-        },
-        displayOptions: {
-          show: { 
-            resource: ['changelogProducts'],
-            operation: ['get'],
-          },
-        },
-        default: '',
-        description: 'Select changelog entry from list',
-        required: true,
-      },
-      {
-        displayName: 'Changelog ID',
-        name: 'changelogProductsIdManual',
-        type: 'string',
-        displayOptions: {
-          show: { 
-            resource: ['changelogProducts'],
-            operation: ['get'],
-          },
-        },
-        default: '',
-        description: 'Enter changelog ID manually',
-        required: true,
-      },
-      
-      // Changelog Ledger Entry Lines
-      {
-        displayName: 'Selection Mode',
-        name: 'changelogLedgerEntryLinesSelectionMode',
-        type: 'options',
-        displayOptions: {
-          show: { 
-            resource: ['changelogLedgerEntryLines'],
-            operation: ['get']
-          },
-        },
-        options: [
-          { name: '📋 Select from List', value: 'list' },
-          { name: '✏️ Enter Custom ID', value: 'manual' },
-        ],
-        default: 'list',
-        description: 'Choose how to select the changelog entry',
-      },
-      {
-        displayName: 'Ledger Entry Line Changelog',
-        name: 'changelogLedgerEntryLinesId',
-        type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'getChangelogLedgerEntryLines',
-        },
-        displayOptions: {
-          show: { 
-            resource: ['changelogLedgerEntryLines'],
-            operation: ['get'],
-          },
-        },
-        default: '',
-        description: 'Select changelog entry from list',
-        required: true,
-      },
-      {
-        displayName: 'Changelog ID',
-        name: 'changelogLedgerEntryLinesIdManual',
-        type: 'string',
-        displayOptions: {
-          show: { 
-            resource: ['changelogLedgerEntryLines'],
-            operation: ['get'],
-          },
-        },
-        default: '',
-        description: 'Enter changelog ID manually',
-        required: true,
-      },
-      
-      // Changelog Transactions
-      {
-        displayName: 'Selection Mode',
-        name: 'changelogTransactionsSelectionMode',
-        type: 'options',
-        displayOptions: {
-          show: { 
-            resource: ['changelogTransactions'],
-            operation: ['get']
-          },
-        },
-        options: [
-          { name: '📋 Select from List', value: 'list' },
-          { name: '✏️ Enter Custom ID', value: 'manual' },
-        ],
-        default: 'list',
-        description: 'Choose how to select the changelog entry',
-      },
-      {
-        displayName: 'Transaction Changelog',
-        name: 'changelogTransactionsId',
-        type: 'options',
-        typeOptions: {
-          loadOptionsMethod: 'getChangelogTransactions',
-        },
-        displayOptions: {
-          show: { 
-            resource: ['changelogTransactions'],
-            operation: ['get'],
-          },
-        },
-        default: '',
-        description: 'Select changelog entry from list',
-        required: true,
-      },
-      {
-        displayName: 'Changelog ID',
-        name: 'changelogTransactionsIdManual',
-        type: 'string',
-        displayOptions: {
-          show: { 
-            resource: ['changelogTransactions'],
-            operation: ['get'],
-          },
-        },
-        default: '',
-        description: 'Enter changelog ID manually',
-        required: true,
-      },
       
       // Mode de sélection Customer Invoice
       {
@@ -2742,15 +2436,148 @@ export class Pennylane implements INodeType {
               const perPage = this.getNodeParameter('perPage', i) as number;
               getUrl += `?page=${page}&per_page=${perPage}`;
             }
-            // Paramètres spéciaux pour Payments
+            // Paramètres spéciaux pour Payments GET ALL - Vue simplifiée
             else if (resource === 'payment') {
-              const paymentType = this.getNodeParameter('paymentType', i) as string;
-              const invoiceId = this.getNodeParameter('paymentInvoiceId', i) as string;
+              // GET ALL: Retourne toutes les factures avec leur statut de paiement
+              console.log(`🚀 Payment GET ALL v1.7.5: Vue simplifiée - toutes les factures avec statut paid`);
+              console.log(`🔧 Interface simplifiée: plus de filtre manuel, utilisez les nœuds n8n pour filtrer`);
               
-              if (paymentType === 'customer') {
-                getUrl = `/customer_invoices/${invoiceId}/payments`;
-              } else if (paymentType === 'supplier') {
-                getUrl = `/supplier_invoices/${invoiceId}/payments`;
+              let allPayments: any[] = [];
+              
+              try {
+                // 1. Récupérer toutes les factures clients
+                console.log('📋 Récupération des factures clients...');
+                console.log(`🔗 URL: /customer_invoices?per_page=100`);
+                const customerInvoicesResponse = await pennylaneApiRequest.call(this, 'GET', '/customer_invoices?per_page=100');
+                console.log(`✅ Réponse reçue:`, typeof customerInvoicesResponse, Object.keys(customerInvoicesResponse || {}));
+                const customerInvoices = customerInvoicesResponse.items || [];
+                console.log(`📊 ${customerInvoices.length} factures clients trouvées`);
+                
+                // 2. Pour chaque facture client (payée ET non payée), récupérer ses paiements
+                let customerPaymentCount = 0;
+                let customerInvoicesChecked = 0;
+                
+                // Fonction helper pour attendre
+                const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+                
+                for (const invoice of customerInvoices) {
+                  // Pas de filtre - traiter toutes les factures
+                  
+                  try {
+                    // Petit délai entre les requêtes pour éviter le rate limiting
+                    if (customerInvoicesChecked > 0 && customerInvoicesChecked % 10 === 0) {
+                      console.log(`⏱️ Pause de 500ms après ${customerInvoicesChecked} factures clients...`);
+                      await delay(500);
+                    }
+                    
+                    console.log(`🔗 Appel: /customer_invoices/${invoice.id}/matched_transactions`);
+                    const paymentsResponse = await pennylaneApiRequest.call(this, 'GET', `/customer_invoices/${invoice.id}/matched_transactions`);
+                    const payments = paymentsResponse.items || [];
+                    customerInvoicesChecked++;
+                    
+                    // Créer TOUJOURS une entrée pour cette facture (avec ou sans transactions)
+                    const invoicePaymentData = {
+                      invoice_id: invoice.id,
+                      invoice_type: 'customer',
+                      invoice_number: invoice.invoice_number,
+                      invoice_amount: invoice.amount,
+                      invoice_date: invoice.date,
+                      paid_status: invoice.paid,
+                      customer_name: invoice.customer?.name || 'N/A',
+                      transaction_count: payments.length,
+                      transactions: payments
+                    };
+                    
+                    allPayments.push(invoicePaymentData);
+                    customerPaymentCount++;
+                    
+                    console.log(`📄 Facture client ${invoice.id}: paid=${invoice.paid}, transactions=${payments.length}`);
+                  } catch (error) {
+                    console.log(`⚠️ Erreur paiements facture client ${invoice.id}:`, error instanceof Error ? error.message.substring(0, 200) : error);
+                    // En cas d'erreur de rate limiting, attendre plus longtemps mais CONTINUER
+                    if (error instanceof Error && error.message.includes('HTML')) {
+                      console.log(`🚨 Rate limiting détecté sur facture ${invoice.id}, pause de 3s et CONTINUE...`);
+                      await delay(3000);
+                    }
+                    // NE PAS faire crash - continuer avec les autres factures
+                    console.log(`➡️ Continue avec les autres factures...`);
+                  }
+                }
+                console.log(`📄 ${customerPaymentCount} factures clients traitées (${customerInvoicesChecked} vérifiées)`);
+                
+                // 3. Récupérer toutes les factures fournisseurs  
+                console.log('📋 Récupération des factures fournisseurs...');
+                const supplierInvoicesResponse = await pennylaneApiRequest.call(this, 'GET', '/supplier_invoices?per_page=100');
+                const supplierInvoices = supplierInvoicesResponse.items || [];
+                console.log(`📊 ${supplierInvoices.length} factures fournisseurs trouvées`);
+                
+                // 4. Pour chaque facture fournisseur (payée ET non payée), récupérer ses paiements
+                let supplierPaymentCount = 0;
+                let supplierInvoicesChecked = 0;
+                for (const invoice of supplierInvoices) {
+                  // Pas de filtre - traiter toutes les factures
+                  
+                  try {
+                    // Petit délai entre les requêtes pour éviter le rate limiting
+                    if (supplierInvoicesChecked > 0 && supplierInvoicesChecked % 10 === 0) {
+                      console.log(`⏱️ Pause de 500ms après ${supplierInvoicesChecked} factures fournisseurs...`);
+                      await delay(500);
+                    }
+                    
+                    console.log(`🔗 Appel: /supplier_invoices/${invoice.id}/matched_transactions`);
+                    const paymentsResponse = await pennylaneApiRequest.call(this, 'GET', `/supplier_invoices/${invoice.id}/matched_transactions`);
+                    const payments = paymentsResponse.items || [];
+                    supplierInvoicesChecked++;
+                    
+                    // Créer TOUJOURS une entrée pour cette facture (avec ou sans transactions)
+                    const invoicePaymentData = {
+                      invoice_id: invoice.id,
+                      invoice_type: 'supplier',
+                      invoice_number: invoice.invoice_number,
+                      invoice_amount: invoice.amount,
+                      invoice_date: invoice.date,
+                      paid_status: invoice.paid,
+                      supplier_name: invoice.supplier?.name || 'N/A',
+                      transaction_count: payments.length,
+                      transactions: payments
+                    };
+                    
+                    allPayments.push(invoicePaymentData);
+                    supplierPaymentCount++;
+                    
+                    console.log(`📄 Facture fournisseur ${invoice.id}: paid=${invoice.paid}, transactions=${payments.length}`);
+                  } catch (error) {
+                    console.log(`⚠️ Erreur paiements facture fournisseur ${invoice.id}:`, error instanceof Error ? error.message.substring(0, 200) : error);
+                    // En cas d'erreur de rate limiting, attendre plus longtemps mais CONTINUER
+                    if (error instanceof Error && error.message.includes('HTML')) {
+                      console.log(`🚨 Rate limiting détecté sur facture ${invoice.id}, pause de 3s et CONTINUE...`);
+                      await delay(3000);
+                    }
+                    // NE PAS faire crash - continuer avec les autres factures
+                    console.log(`➡️ Continue avec les autres factures...`);
+                  }
+                }
+                console.log(`📄 ${supplierPaymentCount} factures fournisseurs traitées (${supplierInvoicesChecked} vérifiées)`);
+                
+                // 5. Retourner le résultat simplifié (sera splité automatiquement)
+                responseData = {
+                  items: allPayments,
+                  has_more: false,
+                  next_cursor: null,
+                  total_invoices: allPayments.length,
+                  total_customer_invoices: customerPaymentCount,
+                  total_supplier_invoices: supplierPaymentCount,
+                  source: 'all_invoices_with_payment_status',
+                  generated_at: new Date().toISOString()
+                };
+                
+                console.log(`✅ Payment GET ALL terminé: ${allPayments.length} factures (toutes avec statut paid) -> seront splités automatiquement`);
+                // IMPORTANT: Ne pas continuer vers l'appel général, l'agrégation est terminée
+                break;
+                
+              } catch (error) {
+                console.error('❌ Erreur lors de l\'agrégation des paiements:', error);
+                throw new Error(`Erreur agrégation paiements: ${error instanceof Error ? error.message : 'Unknown error'}`);
               }
             }
             // Paramètres spéciaux pour Invoice Lines
@@ -2796,20 +2623,47 @@ export class Pennylane implements INodeType {
               const getUrl = `/${endpoint}?page=${page}&per_page=${perPage}`;
               responseData = await pennylaneApiRequest.call(this, 'GET', getUrl);
             } else if (resource === 'payment') {
-              // Gestion spéciale pour Payments (même logique que getAll)
+              // GET: Paiements d'une facture spécifique
               const paymentType = this.getNodeParameter('paymentType', i) as string;
               const invoiceId = this.getNodeParameter('paymentInvoiceId', i) as string;
               let getUrl: string;
               
+              console.log(`🎯 Payment GET: ${paymentType} invoice ${invoiceId}`);
+              
               if (paymentType === 'customer') {
-                getUrl = `/customer_invoices/${invoiceId}/payments`;
+                getUrl = `/customer_invoices/${invoiceId}/matched_transactions`;
               } else if (paymentType === 'supplier') {
-                getUrl = `/supplier_invoices/${invoiceId}/payments`;
+                getUrl = `/supplier_invoices/${invoiceId}/matched_transactions`;
               } else {
                 throw new Error('Invalid payment type');
               }
               
               responseData = await pennylaneApiRequest.call(this, 'GET', getUrl);
+              
+              // Enrichissement avec métadonnées de la facture
+              if (responseData && responseData.items) {
+                try {
+                  const invoiceUrl = paymentType === 'customer' ? 
+                    `/customer_invoices/${invoiceId}` : 
+                    `/supplier_invoices/${invoiceId}`;
+                  const invoiceData = await pennylaneApiRequest.call(this, 'GET', invoiceUrl);
+                  
+                  responseData.items = responseData.items.map((transaction: any) => ({
+                    ...transaction,
+                    invoice_type: paymentType,
+                    invoice_id: invoiceId,
+                    invoice_number: invoiceData.invoice_number,
+                    invoice_amount: invoiceData.amount,
+                    invoice_date: invoiceData.date,
+                    [paymentType === 'customer' ? 'customer_name' : 'supplier_name']: 
+                      invoiceData[paymentType]?.name || 'N/A'
+                  }));
+                  
+                  responseData.source = 'specific_invoice_matched_transactions';
+                } catch (error) {
+                  console.log('⚠️ Impossible d\'enrichir les métadonnées:', error);
+                }
+              }
             } else if (resource === 'invoiceLines') {
               // Gestion spéciale pour Invoice Lines (même logique que getAll)
               const invoiceType = this.getNodeParameter('invoiceType', i) as string;
@@ -3186,9 +3040,37 @@ export class Pennylane implements INodeType {
             throw new Error(`Unknown operation: ${operation}`);
         }
 
-        returnData.push({
-          json: responseData || { message: 'Operation completed' },
-        });
+        // Split automatique pour les opérations GET ALL qui retournent des items
+        if (operation === 'getAll' && responseData && responseData.items && Array.isArray(responseData.items)) {
+          const shouldSplit = ['payment', 'customerInvoice', 'supplierInvoice', 'customer', 'supplier', 'product', 'transaction', 'category', 'ledgerEntryLine', 'journal'].includes(resource);
+          
+          if (shouldSplit && responseData.items.length > 0) {
+            console.log(`📦 Split ${resource} GET ALL: ${responseData.items.length} items -> ${responseData.items.length} outputs`);
+            
+            // Chaque item devient un output séparé
+            for (const item of responseData.items) {
+              returnData.push({
+                json: {
+                  ...item,
+                  // Métadonnées optionnelles de l'agrégation (si présentes)
+                  ...(responseData.source && { _source: responseData.source }),
+                  ...(responseData.total_payments && { _total_payments: responseData.total_payments }),
+                  ...(responseData.generated_at && { _generated_at: responseData.generated_at }),
+                },
+              });
+            }
+          } else {
+            // Pas de split, retourner la réponse complète
+            returnData.push({
+              json: responseData || { message: 'Operation completed' },
+            });
+          }
+        } else {
+          // Toutes les autres opérations (GET, CREATE, UPDATE, DELETE)
+          returnData.push({
+            json: responseData || { message: 'Operation completed' },
+          });
+        }
       } catch (error) {
         if (this.continueOnFail()) {
           returnData.push({
